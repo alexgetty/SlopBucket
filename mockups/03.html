@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOP BUCKET - Premium Insights, Zero Substance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background-color: #fff;
+            color: #222;
+            line-height: 1.6;
+        }
+        .alert-ticker {
+            background-color: #8b0000;
+            color: #fff;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 8px 0;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .ticker-content {
+            display: inline-block;
+            animation: scroll 25s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-content span {
+            padding: 0 50px;
+        }
+        header {
+            background-color: #fff;
+            padding: 25px 40px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .logo-area {
+            text-align: center;
+            flex-grow: 1;
+        }
+        .logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 60px;
+            font-weight: normal;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+        .tagline {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #888;
+            margin-top: 5px;
+        }
+        .header-side {
+            font-size: 11px;
+            color: #666;
+            font-family: Arial, sans-serif;
+        }
+        nav {
+            border-top: 1px solid #ddd;
+            border-bottom: 3px double #222;
+            padding: 12px 40px;
+            margin-top: 15px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        nav a {
+            color: #222;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: Arial, sans-serif;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 40px;
+        }
+        .lead-section {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+        }
+        .lead-story h1 {
+            font-size: 42px;
+            line-height: 1.15;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+        .lead-story .summary {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .lead-story .meta {
+            font-size: 12px;
+            color: #888;
+            font-family: Arial, sans-serif;
+        }
+        .lead-sidebar h2 {
+            font-size: 22px;
+            font-weight: normal;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .lead-sidebar h2 a {
+            color: #222;
+            text-decoration: none;
+        }
+        .lead-sidebar h2 a:hover {
+            text-decoration: underline;
+        }
+        .lead-sidebar .opinion-label {
+            display: block;
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8b0000;
+            margin-bottom: 5px;
+        }
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+            padding-top: 30px;
+        }
+        .column-story {
+            padding-right: 20px;
+        }
+        .column-story:not(:last-child) {
+            border-right: 1px solid #ddd;
+        }
+        .column-story .section-label {
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8b0000;
+            margin-bottom: 10px;
+        }
+        .column-story h3 {
+            font-size: 20px;
+            font-weight: normal;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+        .column-story h3 a {
+            color: #222;
+            text-decoration: none;
+        }
+        .column-story h3 a:hover {
+            text-decoration: underline;
+        }
+        .column-story p {
+            font-size: 14px;
+            color: #666;
+        }
+        .section-header {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .section-header h2 {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        .opinion-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .opinion-item {
+            display: flex;
+            gap: 15px;
+        }
+        .opinion-item .author-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: #ddd;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .opinion-item h4 {
+            font-size: 16px;
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+        .opinion-item h4 a {
+            color: #222;
+            text-decoration: none;
+        }
+        .opinion-item .author {
+            font-size: 12px;
+            color: #888;
+            font-family: Arial, sans-serif;
+        }
+        footer {
+            border-top: 3px double #222;
+            margin-top: 50px;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        footer p {
+            font-size: 11px;
+            color: #888;
+            font-family: Arial, sans-serif;
+            margin-bottom: 5px;
+        }
+        footer a {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="alert-ticker" role="marquee" aria-live="off">
+        <div class="ticker-content">
+            <span>BREAKING: Why Gandalf Would Be a Terrible Project Manager</span>
+            <span>EXCLUSIVE: Sourdough as a Service - The $4B Opportunity</span>
+            <span>OPINION: Your Coffee Order Is a Personality Disorder</span>
+            <span>ANALYSIS: I Let My Uber Driver Run My Company</span>
+            <span>EXPERT WARNS: Morning Routine Destroying Shareholder Value</span>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-top">
+            <div class="header-side">
+                Monday<br>January 12, 2026
+            </div>
+            <div class="logo-area">
+                <h1 class="logo">Slop Bucket</h1>
+                <p class="tagline">Premium Insights, Zero Substance</p>
+            </div>
+            <div class="header-side" style="text-align: right;">
+                Today's Paper<br>
+                <a href="#">Subscribe</a>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Opinion</a></li>
+                <li><a href="#">Analysis</a></li>
+                <li><a href="#">Exclusives</a></li>
+                <li><a href="#">Thought Leadership</a></li>
+                <li><a href="#">Hot Takes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="lead-section">
+            <article class="lead-story">
+                <h1>Why Gandalf Would Be a Terrible Project Manager</h1>
+                <p class="summary">A wizard is never late, nor is he early, he arrives precisely when he means to. Unfortunately, that philosophy doesn't align with Agile methodology or stakeholder expectations.</p>
+                <p class="meta">By Our Staff | January 12, 2026</p>
+            </article>
+
+            <aside class="lead-sidebar">
+                <span class="opinion-label">Exclusive Report</span>
+                <h2><a href="#">Sourdough as a Service: The $4B Opportunity VCs Are Missing</a></h2>
+
+                <span class="opinion-label">Opinion</span>
+                <h2><a href="#">Your Coffee Order Is a Personality Disorder</a></h2>
+            </aside>
+        </section>
+
+        <section class="three-column">
+            <article class="column-story">
+                <span class="section-label">Analysis</span>
+                <h3><a href="#">I Let My Uber Driver Run My Company For a Week. Here's What Happened.</a></h3>
+                <p>One founder's radical experiment in delegation reveals uncomfortable truths about the nature of leadership itself.</p>
+            </article>
+
+            <article class="column-story">
+                <span class="section-label">Expert Warning</span>
+                <h3><a href="#">Your Morning Routine May Be Destroying Shareholder Value</a></h3>
+                <p>New research from leading business schools suggests that self-care and profit margins may be fundamentally incompatible.</p>
+            </article>
+
+            <article class="column-story">
+                <span class="section-label">Breaking</span>
+                <h3><a href="#">The Gandalf Problem: A Deeper Look at Wizard-Based Management</a></h3>
+                <p>Industry analysts weigh in on why magical thinking continues to plague C-suite decision making.</p>
+            </article>
+        </section>
+
+        <section class="section-header">
+            <h2>Opinion</h2>
+        </section>
+
+        <div class="opinion-grid">
+            <article class="opinion-item">
+                <div class="author-avatar" role="img" aria-label="Author photo"></div>
+                <div>
+                    <h4><a href="#">The Metrics That Matter (And Why You're Measuring Wrong)</a></h4>
+                    <span class="author">By A Thought Leader</span>
+                </div>
+            </article>
+            <article class="opinion-item">
+                <div class="author-avatar" role="img" aria-label="Author photo"></div>
+                <div>
+                    <h4><a href="#">Disruption Is Dead. Long Live Disruption.</a></h4>
+                    <span class="author">By Another Expert</span>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Slop Bucket Media</p>
+        <p><a href="#">Contact</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Slop Bucket - Thought Leadership for the Thoughtless</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #d4d4d4;
+            color: #000;
+            line-height: 1.4;
+        }
+        .top-bar {
+            background: linear-gradient(to bottom, #000080, #000066);
+            color: white;
+            padding: 6px 20px;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .top-bar a {
+            color: #ffff00;
+            text-decoration: underline;
+        }
+        header {
+            background-color: #ffffff;
+            border-bottom: 3px solid #000080;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 56px;
+            font-weight: bold;
+            color: #000080;
+            text-shadow: 2px 2px 0 #ccc;
+            letter-spacing: -1px;
+        }
+        .tagline {
+            font-family: Verdana, sans-serif;
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        nav {
+            background-color: #000080;
+            padding: 8px 20px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        nav a {
+            display: block;
+            padding: 6px 16px;
+            background-color: #c0c0c0;
+            color: #000;
+            text-decoration: none;
+            font-family: Verdana, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px outset #fff;
+        }
+        nav a:hover {
+            border-style: inset;
+            background-color: #a0a0a0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            border: 1px solid #999;
+            box-shadow: 3px 3px 0 #666;
+        }
+        .headline-section {
+            background-color: #ffffcc;
+            border-bottom: 2px solid #000080;
+            padding: 20px;
+        }
+        .headline-section h1 {
+            font-size: 28px;
+            color: #000080;
+            margin-bottom: 10px;
+        }
+        .headline-section h1::before {
+            content: ">>> ";
+            color: #cc0000;
+        }
+        .headline-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .headline-section .date {
+            font-family: Verdana, sans-serif;
+            font-size: 11px;
+            color: #666;
+        }
+        hr.section-rule {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #000080, #cc0000, #000080);
+            margin: 0;
+        }
+        .content-area {
+            display: flex;
+        }
+        .main-column {
+            flex: 2;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+        }
+        .sidebar-column {
+            flex: 1;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .story-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #999;
+        }
+        .story-item:last-child {
+            border-bottom: none;
+        }
+        .story-item .label {
+            display: inline-block;
+            background-color: #cc0000;
+            color: white;
+            font-family: Verdana, sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            margin-bottom: 8px;
+        }
+        .story-item h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .story-item h2 a {
+            color: #000080;
+            text-decoration: underline;
+        }
+        .story-item h2 a:hover {
+            color: #cc0000;
+        }
+        .story-item p {
+            font-size: 14px;
+            color: #333;
+        }
+        .sidebar-box {
+            background-color: #fff;
+            border: 2px inset #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .sidebar-box h3 {
+            font-family: Verdana, sans-serif;
+            font-size: 13px;
+            color: #000080;
+            border-bottom: 1px solid #000080;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .sidebar-box ul {
+            list-style: square;
+            margin-left: 20px;
+            font-size: 13px;
+        }
+        .sidebar-box li {
+            margin-bottom: 8px;
+        }
+        .sidebar-box a {
+            color: #000080;
+        }
+        .sidebar-box a:hover {
+            color: #cc0000;
+        }
+        .new-badge {
+            display: inline-block;
+            background-color: #ff0000;
+            color: #fff;
+            font-family: Verdana, sans-serif;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 1px 4px;
+            margin-left: 5px;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .counter-box {
+            text-align: center;
+            font-family: Verdana, sans-serif;
+            font-size: 11px;
+            color: #666;
+            margin-top: 15px;
+        }
+        .counter-box .number {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #0f0;
+            padding: 4px 10px;
+            font-size: 14px;
+        }
+        footer {
+            background-color: #000080;
+            color: #ccc;
+            padding: 15px 20px;
+            text-align: center;
+            font-family: Verdana, sans-serif;
+            font-size: 11px;
+        }
+        footer a {
+            color: #ffff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div>Monday, January 12, 2026 | <a href="#">Sign In</a> | <a href="#">Subscribe</a></div>
+        <div>You are visitor #<strong>847,293</strong></div>
+    </div>
+
+    <header>
+        <div class="logo">The Slop Bucket</div>
+        <div class="tagline">Thought Leadership for the Thoughtless</div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">NEWS</a></li>
+            <li><a href="#">OPINION</a></li>
+            <li><a href="#">ANALYSIS</a></li>
+            <li><a href="#">EXCLUSIVE</a></li>
+            <li><a href="#">ABOUT</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="headline-section">
+            <h1>BREAKING: Why Gandalf Would Be a Terrible Project Manager</h1>
+            <p>Industry experts weigh in on the wizard's complete disregard for stakeholder communication and his troubling tendency to disappear mid-sprint.</p>
+            <div class="date">Posted: January 12, 2026, 2:34 PM EST | Updated: 3:17 PM EST</div>
+        </div>
+
+        <hr class="section-rule">
+
+        <div class="content-area">
+            <main class="main-column">
+                <article class="story-item">
+                    <span class="label">EXCLUSIVE</span>
+                    <h2><a href="#">Sourdough as a Service: The $4B Opportunity VCs Are Missing</a></h2>
+                    <p>Our investigative team uncovers the untapped potential of subscription-based fermented bread delivery and why Silicon Valley is asleep at the wheel.</p>
+                </article>
+
+                <article class="story-item">
+                    <span class="label">OPINION</span>
+                    <h2><a href="#">Your Coffee Order Is a Personality Disorder</a> <span class="new-badge">NEW!</span></h2>
+                    <p>A clinical psychologist explains what your oat milk latte says about your attachment style and why cold brew drinkers should seek professional help.</p>
+                </article>
+
+                <article class="story-item">
+                    <span class="label">ANALYSIS</span>
+                    <h2><a href="#">I Let My Uber Driver Run My Company For a Week. Here's What Happened.</a></h2>
+                    <p>One CEO's radical experiment in delegation reveals surprising insights about leadership, trust, and surge pricing.</p>
+                </article>
+
+                <article class="story-item">
+                    <span class="label">EXPERT TAKE</span>
+                    <h2><a href="#">EXPERT WARNS: Your Morning Routine May Be Destroying Shareholder Value</a></h2>
+                    <p>New research suggests that every minute spent on self-care is a minute stolen from Q4 projections.</p>
+                </article>
+            </main>
+
+            <aside class="sidebar-column">
+                <div class="sidebar-box">
+                    <h3>MOST EMAILED</h3>
+                    <ul>
+                        <li><a href="#">Why Gandalf Would Be Terrible PM</a></li>
+                        <li><a href="#">Sourdough as a Service</a></li>
+                        <li><a href="#">Coffee Order Personality</a> <span class="new-badge">NEW!</span></li>
+                        <li><a href="#">Uber Driver CEO</a></li>
+                        <li><a href="#">Morning Routine Warning</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-box">
+                    <h3>QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="#">Today's Hot Takes</a></li>
+                        <li><a href="#">Thought Leader Directory</a></li>
+                        <li><a href="#">Submit Your Opinion</a></li>
+                        <li><a href="#">Newsletter Signup</a></li>
+                    </ul>
+                </div>
+
+                <div class="counter-box">
+                    <p>Page Views Today:</p>
+                    <span class="number">00482917</span>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 The Slop Bucket. All Rights Reserved. | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact Webmaster</a></p>
+        <p>Best viewed in Netscape Navigator 4.0 or higher at 800x600 resolution</p>
+    </footer>
+</body>
+</html>

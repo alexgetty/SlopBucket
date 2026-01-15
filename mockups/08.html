@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOP BUCKET ONLINE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Verdana, Geneva, Arial, sans-serif;
+            background-color: #336699;
+            color: #000;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .outer-frame {
+            max-width: 760px;
+            margin: 10px auto;
+            background-color: #fff;
+            border: 3px ridge #99ccff;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+        }
+        .top-ad-bar {
+            background-color: #ffffcc;
+            padding: 8px;
+            text-align: center;
+            border-bottom: 2px solid #cc9900;
+            font-size: 11px;
+        }
+        .top-ad-bar a {
+            color: #cc0000;
+            font-weight: bold;
+        }
+        header {
+            background: linear-gradient(to right, #003366 0%, #336699 50%, #003366 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px double #ffcc00;
+        }
+        .logo-container {
+            background-color: #fff;
+            display: inline-block;
+            padding: 15px 40px;
+            border: 3px outset #ccc;
+        }
+        .logo {
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: 42px;
+            color: #003366;
+            text-shadow: 2px 2px 0 #99ccff;
+        }
+        .slogan {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .nav-strip {
+            background-color: #003366;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2px;
+        }
+        .nav-strip a {
+            display: inline-block;
+            background: linear-gradient(to bottom, #6699cc 0%, #336699 100%);
+            color: #fff;
+            text-decoration: none;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: bold;
+            border: 1px outset #99ccff;
+        }
+        .nav-strip a:hover {
+            background: linear-gradient(to bottom, #99ccff 0%, #6699cc 100%);
+        }
+        .date-bar {
+            background-color: #e6e6e6;
+            padding: 6px 15px;
+            font-size: 11px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+        }
+        .main-layout {
+            display: flex;
+        }
+        .left-nav {
+            width: 150px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-right: 2px groove #ccc;
+        }
+        .nav-section {
+            margin-bottom: 15px;
+        }
+        .nav-section h4 {
+            background-color: #003366;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+        .nav-section ul {
+            list-style: none;
+        }
+        .nav-section li {
+            border-bottom: 1px dotted #ccc;
+        }
+        .nav-section a {
+            display: block;
+            padding: 5px 8px;
+            color: #003366;
+            text-decoration: none;
+            font-size: 11px;
+        }
+        .nav-section a:hover {
+            background-color: #ffffcc;
+            color: #cc0000;
+        }
+        .main-content {
+            flex: 1;
+            padding: 15px;
+        }
+        .breaking-flash {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            animation: flash-bg 1s ease-in-out infinite;
+        }
+        @keyframes flash-bg {
+            0%, 100% { background-color: #ff0000; }
+            50% { background-color: #cc0000; }
+        }
+        .top-story {
+            border: 2px solid #003366;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .top-story .label {
+            display: inline-block;
+            background-color: #cc0000;
+            color: #fff;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            margin-bottom: 8px;
+        }
+        .top-story h2 {
+            font-size: 20px;
+            color: #003366;
+            margin-bottom: 10px;
+        }
+        .top-story h2 a {
+            color: #003366;
+            text-decoration: none;
+        }
+        .top-story h2 a:hover {
+            text-decoration: underline;
+        }
+        .top-story p {
+            font-size: 13px;
+            color: #333;
+        }
+        .top-story .info {
+            margin-top: 10px;
+            font-size: 10px;
+            color: #666;
+        }
+        .story-list {
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .story-list-header {
+            background-color: #003366;
+            color: #ffcc00;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .story-list ul {
+            list-style: none;
+        }
+        .story-list li {
+            padding: 10px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        .story-list li:last-child {
+            border-bottom: none;
+        }
+        .story-list .type {
+            display: inline-block;
+            background-color: #336699;
+            color: #fff;
+            font-size: 9px;
+            padding: 1px 5px;
+            margin-right: 8px;
+        }
+        .story-list a {
+            color: #003366;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .story-list a:hover {
+            color: #cc0000;
+        }
+        .story-list .new {
+            color: #ff0000;
+            font-size: 9px;
+            font-weight: bold;
+        }
+        .right-sidebar {
+            width: 160px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-left: 2px groove #ccc;
+        }
+        .sidebar-widget {
+            border: 2px inset #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #fff;
+        }
+        .sidebar-widget h4 {
+            font-size: 11px;
+            color: #003366;
+            border-bottom: 1px solid #003366;
+            padding-bottom: 5px;
+            margin-bottom: 8px;
+        }
+        .sidebar-widget p {
+            font-size: 10px;
+            color: #666;
+        }
+        .poll-box {
+            background-color: #ffffcc;
+        }
+        .poll-box .question {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .poll-box label {
+            display: block;
+            margin: 4px 0;
+        }
+        .poll-box button {
+            margin-top: 8px;
+            background-color: #003366;
+            color: #fff;
+            border: 2px outset #6699cc;
+            padding: 3px 10px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        .hit-counter {
+            text-align: center;
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 8px;
+            font-size: 12px;
+        }
+        footer {
+            background-color: #003366;
+            color: #99ccff;
+            padding: 15px;
+            text-align: center;
+            font-size: 10px;
+        }
+        footer a {
+            color: #ffcc00;
+            margin: 0 5px;
+        }
+        .footer-badges {
+            margin-top: 10px;
+        }
+        .footer-badges span {
+            display: inline-block;
+            background-color: #fff;
+            color: #003366;
+            padding: 3px 8px;
+            font-size: 9px;
+            font-weight: bold;
+            margin: 2px;
+            border: 1px solid #003366;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer-frame">
+        <div class="top-ad-bar">
+            <a href="#">Subscribe to Slop Bucket Premium - 50% Off!</a> Your source for thought leadership since 1997
+        </div>
+
+        <header>
+            <div class="logo-container">
+                <div class="logo">SLOP BUCKET</div>
+                <div class="slogan">All The News That's Fit to Slop</div>
+            </div>
+        </header>
+
+        <nav class="nav-strip">
+            <a href="#">HOME</a>
+            <a href="#">NEWS</a>
+            <a href="#">OPINION</a>
+            <a href="#">ANALYSIS</a>
+            <a href="#">EXCLUSIVE</a>
+            <a href="#">SEARCH</a>
+            <a href="#">HELP</a>
+        </nav>
+
+        <div class="date-bar">
+            <span>Monday, January 12, 2026</span>
+            <span>Last Updated: 3:42 PM EST</span>
+        </div>
+
+        <div class="main-layout">
+            <nav class="left-nav">
+                <div class="nav-section">
+                    <h4>SECTIONS</h4>
+                    <ul>
+                        <li><a href="#">Breaking News</a></li>
+                        <li><a href="#">Opinion</a></li>
+                        <li><a href="#">Analysis</a></li>
+                        <li><a href="#">Exclusive</a></li>
+                        <li><a href="#">Hot Takes</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h4>SERVICES</h4>
+                    <ul>
+                        <li><a href="#">Newsletter</a></li>
+                        <li><a href="#">RSS Feed</a></li>
+                        <li><a href="#">Archives</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="main-content">
+                <div class="breaking-flash">
+                    BREAKING NEWS - EXPERT WARNS: YOUR MORNING ROUTINE MAY BE DESTROYING SHAREHOLDER VALUE
+                </div>
+
+                <article class="top-story">
+                    <span class="label">BREAKING</span>
+                    <h2><a href="#">Why Gandalf Would Be a Terrible Project Manager</a></h2>
+                    <p>A wizard is never late, nor is he early. He arrives precisely when he means to. Unfortunately, that approach doesn't align with Agile methodology or stakeholder expectations.</p>
+                    <p class="info">Posted: 2:34 PM EST | Updated: 3:15 PM EST | Comments: 847</p>
+                </article>
+
+                <div class="story-list">
+                    <div class="story-list-header">TODAY'S TOP STORIES</div>
+                    <ul>
+                        <li>
+                            <span class="type">EXCLUSIVE</span>
+                            <a href="#">Sourdough as a Service: The $4B Opportunity VCs Are Missing</a>
+                            <span class="new">NEW!</span>
+                        </li>
+                        <li>
+                            <span class="type">OPINION</span>
+                            <a href="#">Your Coffee Order Is a Personality Disorder</a>
+                        </li>
+                        <li>
+                            <span class="type">ANALYSIS</span>
+                            <a href="#">I Let My Uber Driver Run My Company For a Week. Here's What Happened.</a>
+                        </li>
+                        <li>
+                            <span class="type">EXPERT</span>
+                            <a href="#">Your Morning Routine May Be Destroying Shareholder Value</a>
+                        </li>
+                    </ul>
+                </div>
+            </main>
+
+            <aside class="right-sidebar">
+                <div class="sidebar-widget poll-box">
+                    <h4>TODAY'S POLL</h4>
+                    <p class="question">Would Gandalf make a good PM?</p>
+                    <form>
+                        <label><input type="radio" name="poll"> Yes</label>
+                        <label><input type="radio" name="poll"> No</label>
+                        <label><input type="radio" name="poll"> Undecided</label>
+                        <button type="button">Vote!</button>
+                    </form>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h4>MOST EMAILED</h4>
+                    <p>1. Gandalf PM Report<br>2. Sourdough $4B<br>3. Coffee Disorders<br>4. Uber CEO<br>5. Morning Routine</p>
+                </div>
+
+                <div class="hit-counter">
+                    Visitors Today:<br>
+                    [ 00847293 ]
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <p>&copy; 1997-2026 Slop Bucket Online. All Rights Reserved.</p>
+            <p>
+                <a href="#">Home</a> |
+                <a href="#">About</a> |
+                <a href="#">Contact</a> |
+                <a href="#">Privacy</a> |
+                <a href="#">Terms</a>
+            </p>
+            <div class="footer-badges">
+                <span>Best of Web '98</span>
+                <span>Y2K Compliant</span>
+                <span>Made with Notepad</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

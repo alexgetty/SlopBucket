@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Slop Bucket</title>
+    <style>
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Window chrome - warm gray instead of Windows beige */
+            --chrome-bg: #c8c4bc;
+            --chrome-light: #e8e4dc;
+            --chrome-dark: #8a8680;
+            --chrome-darker: #5c5854;
+
+            /* Title bar - teal/slate instead of Windows blue */
+            --titlebar-start: #4a6670;
+            --titlebar-mid: #5d8090;
+            --titlebar-end: #3d5560;
+
+            /* Accent colors */
+            --accent-primary: #4a6670;
+            --accent-hover: #5d8090;
+            --accent-text: #2d3e44;
+
+            /* Content */
+            --content-bg: #ffffff;
+            --content-border: #a0a0a0;
+            --text-primary: #1a1a1a;
+            --text-secondary: #5a5a5a;
+            --text-muted: #888888;
+
+            /* Category badges */
+            --badge-breaking: #b44;
+            --badge-exclusive: #48a;
+            --badge-opinion: #864;
+            --badge-analysis: #486;
+            --badge-warning: #a84;
+
+            /* Spacing scale */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 12px;
+            --space-lg: 16px;
+            --space-xl: 24px;
+        }
+
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Grande', Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667788 0%, #445566 50%, #334455 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-xl);
+            color: var(--text-primary);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* ========================================
+           WINDOW FRAME
+           ======================================== */
+        .window {
+            width: 100%;
+            max-width: 920px;
+            background-color: var(--chrome-bg);
+            border: 1px solid var(--chrome-darker);
+            border-radius: 4px 4px 2px 2px;
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.4),
+                0 1px 3px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 var(--chrome-light);
+            overflow: hidden;
+        }
+
+        /* ========================================
+           TITLE BAR
+           ======================================== */
+        .title-bar {
+            background: linear-gradient(180deg,
+                var(--titlebar-mid) 0%,
+                var(--titlebar-start) 45%,
+                var(--titlebar-end) 100%
+            );
+            padding: 6px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--chrome-darker);
+        }
+
+        .title-bar-text {
+            color: #fff;
+            font-weight: 600;
+            font-size: 12px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.02em;
+        }
+
+        .title-bar-controls {
+            display: flex;
+            gap: 3px;
+        }
+
+        .title-bar-controls button {
+            width: 18px;
+            height: 18px;
+            border-radius: 2px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.1s;
+        }
+
+        .btn-minimize {
+            background: linear-gradient(180deg, #e8e4dc 0%, #c8c4bc 100%);
+            color: var(--chrome-darker);
+        }
+
+        .btn-maximize {
+            background: linear-gradient(180deg, #e8e4dc 0%, #c8c4bc 100%);
+            color: var(--chrome-darker);
+        }
+
+        .btn-close {
+            background: linear-gradient(180deg, #d88 0%, #a55 100%);
+            color: #fff;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+        }
+
+        .title-bar-controls button:hover {
+            filter: brightness(1.1);
+        }
+
+        .title-bar-controls button:active {
+            filter: brightness(0.95);
+        }
+
+        /* ========================================
+           MENU BAR
+           ======================================== */
+        .menu-bar {
+            background-color: var(--chrome-bg);
+            padding: var(--space-xs) var(--space-sm);
+            border-bottom: 1px solid var(--chrome-dark);
+            display: flex;
+            gap: 2px;
+        }
+
+        .menu-bar button {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            color: var(--text-primary);
+            padding: 3px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .menu-bar button:hover {
+            background-color: var(--accent-primary);
+            color: #fff;
+            border-color: var(--accent-primary);
+        }
+
+        /* ========================================
+           TOOLBAR
+           ======================================== */
+        .toolbar {
+            background: linear-gradient(180deg, var(--chrome-light) 0%, var(--chrome-bg) 100%);
+            padding: var(--space-sm);
+            border-bottom: 1px solid var(--chrome-dark);
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .toolbar-btn {
+            background: linear-gradient(180deg, #fff 0%, var(--chrome-bg) 100%);
+            border: 1px solid var(--chrome-dark);
+            border-radius: 3px;
+            padding: 4px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--text-primary);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .toolbar-btn:hover {
+            background: linear-gradient(180deg, #fff 0%, #e0dcd4 100%);
+            border-color: var(--accent-primary);
+        }
+
+        .toolbar-btn:active {
+            background: linear-gradient(180deg, var(--chrome-bg) 0%, var(--chrome-light) 100%);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ========================================
+           ADDRESS BAR
+           ======================================== */
+        .address-bar {
+            background-color: var(--chrome-bg);
+            padding: var(--space-sm) var(--space-md);
+            border-bottom: 1px solid var(--chrome-dark);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .address-bar label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .address-bar input {
+            flex: 1;
+            border: 1px solid var(--chrome-dark);
+            border-radius: 2px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            background-color: #fff;
+            color: var(--text-primary);
+        }
+
+        .address-bar input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(74, 102, 112, 0.2);
+        }
+
+        /* ========================================
+           MAIN CONTENT AREA
+           ======================================== */
+        .main-content {
+            display: flex;
+            background-color: var(--content-bg);
+            min-height: 500px;
+        }
+
+        /* ========================================
+           SIDEBAR
+           ======================================== */
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(180deg, #6a7a84 0%, #5a6a74 100%);
+            padding: var(--space-md);
+            border-right: 1px solid var(--chrome-dark);
+            flex-shrink: 0;
+        }
+
+        .sidebar-section {
+            background-color: #fff;
+            border-radius: 3px;
+            margin-bottom: var(--space-md);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar-header {
+            background: linear-gradient(180deg, var(--chrome-light) 0%, var(--chrome-bg) 100%);
+            padding: var(--space-sm) var(--space-md);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--chrome-dark);
+            color: var(--accent-text);
+        }
+
+        .sidebar-content {
+            padding: var(--space-sm);
+        }
+
+        .sidebar-content ul {
+            list-style: none;
+        }
+
+        .sidebar-content li {
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-content li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-content a {
+            display: block;
+            color: var(--accent-text);
+            text-decoration: none;
+            font-size: 12px;
+            padding: var(--space-sm);
+            border-radius: 2px;
+            transition: background-color 0.15s;
+        }
+
+        .sidebar-content a:hover {
+            background-color: rgba(74, 102, 112, 0.1);
+            color: var(--accent-primary);
+        }
+
+        .sidebar-content a:focus {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: -2px;
+        }
+
+        /* ========================================
+           CONTENT AREA
+           ======================================== */
+        .content-area {
+            flex: 1;
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        /* ========================================
+           SITE HEADER
+           ======================================== */
+        .site-header {
+            text-align: center;
+            padding-bottom: var(--space-lg);
+            margin-bottom: var(--space-xl);
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .site-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-text);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-xs);
+        }
+
+        .site-tagline {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* ========================================
+           ALERT BOX
+           ======================================== */
+        .alert-box {
+            background: linear-gradient(180deg, #fff8e8 0%, #fff4dc 100%);
+            border: 1px solid #d4a;
+            border-left: 4px solid #d4a;
+            border-radius: 3px;
+            padding: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .alert-label {
+            display: inline-block;
+            background-color: var(--badge-warning);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 2px 6px;
+            border-radius: 2px;
+            margin-right: var(--space-sm);
+        }
+
+        .alert-box p {
+            display: inline;
+            color: var(--text-primary);
+        }
+
+        .alert-box a {
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        /* ========================================
+           NEWS ITEMS
+           ======================================== */
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .news-item {
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            background-color: #fff;
+            overflow: hidden;
+            transition: box-shadow 0.15s;
+        }
+
+        .news-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-item-header {
+            background: linear-gradient(180deg, #f8f8f6 0%, #f0f0ec 100%);
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: var(--space-md);
+        }
+
+        .news-item-header h2 {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .news-item-header h2 a {
+            color: var(--accent-text);
+            text-decoration: none;
+        }
+
+        .news-item-header h2 a:hover {
+            color: var(--accent-primary);
+            text-decoration: underline;
+        }
+
+        .news-item-header h2 a:focus {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        .category-badge {
+            flex-shrink: 0;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 3px 8px;
+            border-radius: 2px;
+            color: #fff;
+        }
+
+        .category-breaking { background-color: var(--badge-breaking); }
+        .category-exclusive { background-color: var(--badge-exclusive); }
+        .category-opinion { background-color: var(--badge-opinion); }
+        .category-analysis { background-color: var(--badge-analysis); }
+        .category-warning { background-color: var(--badge-warning); }
+
+        .news-item-body {
+            padding: var(--space-lg);
+        }
+
+        .news-item-body p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .news-item-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .news-item-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            padding-top: var(--space-md);
+            border-top: 1px solid #eee;
+            margin-top: var(--space-md);
+        }
+
+        /* ========================================
+           STATUS BAR
+           ======================================== */
+        .status-bar {
+            background: linear-gradient(180deg, var(--chrome-bg) 0%, #b8b4ac 100%);
+            border-top: 1px solid var(--chrome-dark);
+            padding: var(--space-xs) var(--space-md);
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .status-section {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 2px var(--space-sm);
+            border: 1px solid;
+            border-color: var(--chrome-dark) var(--chrome-light) var(--chrome-light) var(--chrome-dark);
+            background-color: var(--chrome-bg);
+            border-radius: 1px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #6a6;
+        }
+
+        /* ========================================
+           ACCESSIBILITY
+           ======================================== */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus visible for keyboard navigation */
+        :focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="window" role="application" aria-label="Browser window containing The Slop Bucket website">
+        <header class="title-bar">
+            <span class="title-bar-text">The Slop Bucket - WebView</span>
+            <div class="title-bar-controls" aria-label="Window controls">
+                <button type="button" class="btn-minimize" aria-label="Minimize window">-</button>
+                <button type="button" class="btn-maximize" aria-label="Maximize window">+</button>
+                <button type="button" class="btn-close" aria-label="Close window">x</button>
+            </div>
+        </header>
+
+        <nav class="menu-bar" aria-label="Application menu">
+            <button type="button">File</button>
+            <button type="button">Edit</button>
+            <button type="button">View</button>
+            <button type="button">Bookmarks</button>
+            <button type="button">Tools</button>
+            <button type="button">Help</button>
+        </nav>
+
+        <div class="toolbar" role="toolbar" aria-label="Navigation toolbar">
+            <button class="toolbar-btn" type="button">Back</button>
+            <button class="toolbar-btn" type="button">Forward</button>
+            <button class="toolbar-btn" type="button">Stop</button>
+            <button class="toolbar-btn" type="button">Reload</button>
+            <button class="toolbar-btn" type="button">Home</button>
+        </div>
+
+        <div class="address-bar">
+            <label for="address">Location:</label>
+            <input type="text" id="address" value="http://www.slopbucket.news/" readonly aria-label="Current web address">
+        </div>
+
+        <div class="main-content">
+            <aside class="sidebar" aria-label="Site navigation">
+                <nav class="sidebar-section">
+                    <h2 class="sidebar-header">Sections</h2>
+                    <div class="sidebar-content">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Breaking</a></li>
+                            <li><a href="#">Opinion</a></li>
+                            <li><a href="#">Analysis</a></li>
+                            <li><a href="#">Warnings</a></li>
+                            <li><a href="#">Archive</a></li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div class="sidebar-section">
+                    <h2 class="sidebar-header">Quick Links</h2>
+                    <div class="sidebar-content">
+                        <ul>
+                            <li><a href="#">Submit a Tip</a></li>
+                            <li><a href="#">Newsletter</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content-area">
+                <header class="site-header">
+                    <h1 class="site-title">The Slop Bucket</h1>
+                    <p class="site-tagline">Your trusted source for news that probably matters</p>
+                </header>
+
+                <div class="alert-box" role="alert">
+                    <span class="alert-label">Alert</span>
+                    <p>Expert Warns Your Morning Routine May Be Destroying Shareholder Value. <a href="#">Full story...</a></p>
+                </div>
+
+                <div class="news-list">
+                    <article class="news-item">
+                        <header class="news-item-header">
+                            <h2><a href="#">BREAKING: Why Gandalf Would Be a Terrible Project Manager</a></h2>
+                            <span class="category-badge category-breaking">Breaking</span>
+                        </header>
+                        <div class="news-item-body">
+                            <p>"A wizard is never late, nor is he early. He arrives precisely when he means to." Unfortunately, this philosophy has resulted in three consecutive quarters of missed deliverables and a thoroughly confused Jira board.</p>
+                            <div class="news-item-meta">
+                                January 12, 2026 | Staff Reporter | 847 comments
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-item-header">
+                            <h2><a href="#">EXCLUSIVE: Sourdough as a Service - The $4B Opportunity VCs Are Missing</a></h2>
+                            <span class="category-badge category-exclusive">Exclusive</span>
+                        </header>
+                        <div class="news-item-body">
+                            <p>Our investigative team examines the subscription fermentation economy and asks the hard question: why is Silicon Valley sleeping on artisanal yeast when the TAM clearly supports a unicorn valuation?</p>
+                            <div class="news-item-meta">
+                                January 12, 2026 | Investigation Team
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-item-header">
+                            <h2><a href="#">OPINION: Your Coffee Order Is a Personality Disorder</a></h2>
+                            <span class="category-badge category-opinion">Opinion</span>
+                        </header>
+                        <div class="news-item-body">
+                            <p>Oat milk latte with an extra shot? That's not a beverage preference, that's a cry for help masquerading as dietary restriction. A licensed professional weighs in.</p>
+                            <div class="news-item-meta">
+                                January 12, 2026 | Dr. Someone, PhD
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-item-header">
+                            <h2><a href="#">ANALYSIS: I Let My Uber Driver Run My Company For a Week</a></h2>
+                            <span class="category-badge category-analysis">Analysis</span>
+                        </header>
+                        <div class="news-item-body">
+                            <p>He had five stars and strong opinions about cryptocurrency. What could go wrong? An inside look at the experiment that taught me everything about leadership and nothing about rideshare ratings.</p>
+                            <div class="news-item-meta">
+                                January 11, 2026 | Featured Contributor
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-item-header">
+                            <h2><a href="#">EXPERT WARNS: Your Morning Routine May Be Destroying Shareholder Value</a></h2>
+                            <span class="category-badge category-warning">Warning</span>
+                        </header>
+                        <div class="news-item-body">
+                            <p>That extra five minutes you spend making pour-over coffee? A new study suggests it's directly correlated with declining market confidence. Here's what investors wish you knew about waking up.</p>
+                            <div class="news-item-meta">
+                                January 11, 2026 | Markets Desk
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </main>
+        </div>
+
+        <footer class="status-bar">
+            <span class="status-section">
+                <span class="status-indicator" aria-hidden="true"></span>
+                Done
+            </span>
+            <span class="status-section">slopbucket.news</span>
+            <span class="status-section">Readers: 847</span>
+        </footer>
+    </div>
+</body>
+</html>

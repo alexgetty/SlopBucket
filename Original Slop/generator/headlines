@@ -1,0 +1,209 @@
+#!/bin/bash
+
+# Slop Bucket Headline Generator
+# Usage: ./headlines [count]
+# Default count: 5
+
+COUNT=${1:-5}
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Arrays to hold file contents
+declare -a FORMATS
+declare -a ARCHETYPES
+declare -a SUBJECTS
+declare -a CONSTRAINTS
+declare -a FALLACIES
+
+# Read all markdown files and categorize by type
+for file in "$SCRIPT_DIR"/*.md; do
+  [ -f "$file" ] || continue
+
+  # Extract type from frontmatter
+  TYPE=$(grep -m1 "^type:" "$file" | sed 's/type: *//')
+
+  case "$TYPE" in
+    format)
+      FORMATS+=("$file")
+      ;;
+    archetype)
+      ARCHETYPES+=("$file")
+      ;;
+    subject)
+      SUBJECTS+=("$file")
+      ;;
+    constraint)
+      CONSTRAINTS+=("$file")
+      ;;
+    fallacy)
+      FALLACIES+=("$file")
+      ;;
+  esac
+done
+
+# Function to get random element from array
+random_element() {
+  local arr=("$@")
+  echo "${arr[$RANDOM % ${#arr[@]}]}"
+}
+
+# Function to extract title from markdown file
+get_title() {
+  grep -m1 "^# " "$1" | sed 's/^# //'
+}
+
+# Function to extract description (first paragraph after title)
+get_description() {
+  awk '/^# /{found=1; next} found && /^[^#\*\-]/ && NF{print; exit}' "$1"
+}
+
+# Function to extract headline templates
+get_templates() {
+  awk '/^## Headline Templates$/{found=1; next} /^## /{found=0} found && /^- /' "$1" | sed 's/^- //' | tr -d '"'
+}
+
+# Function to extract example headlines
+get_examples() {
+  awk '/^## Example Headlines$/{found=1; next} /^## /{found=0} found && /^- /' "$1" | sed 's/^- //' | tr -d '"'
+}
+
+# Function to extract keywords
+get_keywords() {
+  grep "\*\*Keywords:\*\*" "$1" | sed 's/\*\*Keywords:\*\* //'
+}
+
+echo "================================"
+echo "SLOP BUCKET HEADLINE GENERATOR"
+echo "================================"
+echo ""
+
+for i in $(seq 1 $COUNT); do
+  # Pick random format
+  FORMAT_FILE=$(random_element "${FORMATS[@]}")
+  FORMAT_TITLE=$(get_title "$FORMAT_FILE")
+  FORMAT_DESC=$(get_description "$FORMAT_FILE")
+  FORMAT_TEMPLATES=$(get_templates "$FORMAT_FILE")
+  FORMAT_EXAMPLES=$(get_examples "$FORMAT_FILE")
+
+  # Pick random archetype
+  ARCH_FILE=$(random_element "${ARCHETYPES[@]}")
+  ARCH_TITLE=$(get_title "$ARCH_FILE")
+  ARCH_DESC=$(get_description "$ARCH_FILE")
+
+  # Pick 1-2 random subjects
+  NUM_SUBJECTS=$((RANDOM % 2 + 1))
+  SUBJ1_FILE=$(random_element "${SUBJECTS[@]}")
+  SUBJ1_TITLE=$(get_title "$SUBJ1_FILE")
+  SUBJ1_DESC=$(get_description "$SUBJ1_FILE")
+  SUBJ1_KEYWORDS=$(get_keywords "$SUBJ1_FILE")
+
+  if [ $NUM_SUBJECTS -eq 2 ]; then
+    while true; do
+      SUBJ2_FILE=$(random_element "${SUBJECTS[@]}")
+      [ "$SUBJ2_FILE" != "$SUBJ1_FILE" ] && break
+    done
+    SUBJ2_TITLE=$(get_title "$SUBJ2_FILE")
+    SUBJ2_DESC=$(get_description "$SUBJ2_FILE")
+    SUBJ2_KEYWORDS=$(get_keywords "$SUBJ2_FILE")
+  fi
+
+  # Pick 1-2 random constraints
+  NUM_CONSTRAINTS=$((RANDOM % 2 + 1))
+  CONST1_FILE=$(random_element "${CONSTRAINTS[@]}")
+  CONST1_TITLE=$(get_title "$CONST1_FILE")
+  CONST1_DESC=$(get_description "$CONST1_FILE")
+
+  if [ $NUM_CONSTRAINTS -eq 2 ]; then
+    while true; do
+      CONST2_FILE=$(random_element "${CONSTRAINTS[@]}")
+      [ "$CONST2_FILE" != "$CONST1_FILE" ] && break
+    done
+    CONST2_TITLE=$(get_title "$CONST2_FILE")
+    CONST2_DESC=$(get_description "$CONST2_FILE")
+  fi
+
+  # Pick 1-3 random fallacies (always at least one, weighted toward 1)
+  FALLACY_ROLL=$((RANDOM % 10))
+  if [ $FALLACY_ROLL -lt 6 ]; then
+    NUM_FALLACIES=1
+  elif [ $FALLACY_ROLL -lt 9 ]; then
+    NUM_FALLACIES=2
+  else
+    NUM_FALLACIES=3
+  fi
+
+  FALL1_FILE=$(random_element "${FALLACIES[@]}")
+  FALL1_TITLE=$(get_title "$FALL1_FILE")
+  FALL1_DESC=$(get_description "$FALL1_FILE")
+
+  if [ $NUM_FALLACIES -ge 2 ]; then
+    while true; do
+      FALL2_FILE=$(random_element "${FALLACIES[@]}")
+      [ "$FALL2_FILE" != "$FALL1_FILE" ] && break
+    done
+    FALL2_TITLE=$(get_title "$FALL2_FILE")
+    FALL2_DESC=$(get_description "$FALL2_FILE")
+  fi
+
+  if [ $NUM_FALLACIES -ge 3 ]; then
+    while true; do
+      FALL3_FILE=$(random_element "${FALLACIES[@]}")
+      [ "$FALL3_FILE" != "$FALL1_FILE" ] && [ "$FALL3_FILE" != "$FALL2_FILE" ] && break
+    done
+    FALL3_TITLE=$(get_title "$FALL3_FILE")
+    FALL3_DESC=$(get_description "$FALL3_FILE")
+  fi
+
+  # Output the prompt
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "PROMPT $i"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+
+  echo "FORMAT: $FORMAT_TITLE"
+  echo "$FORMAT_DESC"
+  echo ""
+  echo "Headline templates:"
+  echo "$FORMAT_TEMPLATES" | head -4 | sed 's/^/  /'
+  echo ""
+  echo "Example headlines:"
+  echo "$FORMAT_EXAMPLES" | head -3 | sed 's/^/  /'
+  echo ""
+
+  echo "ARCHETYPE: $ARCH_TITLE"
+  echo "$ARCH_DESC"
+  echo ""
+
+  echo "SUBJECT(S):"
+  echo "  • $SUBJ1_TITLE — $SUBJ1_DESC"
+  [ -n "$SUBJ1_KEYWORDS" ] && echo "    Keywords: $SUBJ1_KEYWORDS"
+  if [ $NUM_SUBJECTS -eq 2 ]; then
+    echo "  • $SUBJ2_TITLE — $SUBJ2_DESC"
+    [ -n "$SUBJ2_KEYWORDS" ] && echo "    Keywords: $SUBJ2_KEYWORDS"
+  fi
+  echo ""
+
+  echo "CONSTRAINT(S):"
+  echo "  • $CONST1_TITLE — $CONST1_DESC"
+  if [ $NUM_CONSTRAINTS -eq 2 ]; then
+    echo "  • $CONST2_TITLE — $CONST2_DESC"
+  fi
+  echo ""
+
+  echo "FALLACY (flavor):"
+  echo "  • $FALL1_TITLE — $FALL1_DESC"
+  if [ $NUM_FALLACIES -ge 2 ]; then
+    echo "  • $FALL2_TITLE — $FALL2_DESC"
+  fi
+  if [ $NUM_FALLACIES -ge 3 ]; then
+    echo "  • $FALL3_TITLE — $FALL3_DESC"
+  fi
+  echo ""
+
+  echo ""
+done
+
+echo "================================"
+echo "GENERATE HEADLINES FOR EACH PROMPT"
+echo "Target: Under 15 words. Punchy. The joke is in the headline."
+echo "Use the format templates as starting points—interpret freely."
+echo "================================"

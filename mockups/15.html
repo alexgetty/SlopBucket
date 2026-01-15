@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slop Bucket Intranet - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Trebuchet MS', Tahoma, Verdana, sans-serif;
+            background-color: #d4d0c8;
+            color: #000;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .window {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ece9d8;
+            border: 2px solid;
+            border-color: #fff #808080 #808080 #fff;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        .title-bar {
+            background: linear-gradient(180deg, #0a246a 0%, #a6caf0 8%, #0a246a 93%, #0a246a 100%);
+            background: linear-gradient(to right, #0a246a, #245edb, #0a246a);
+            padding: 3px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .title-bar-text {
+            color: #fff;
+            font-weight: bold;
+            font-size: 12px;
+            text-shadow: 1px 1px 1px #000;
+        }
+        .title-bar-controls {
+            display: flex;
+            gap: 2px;
+        }
+        .title-bar-controls button {
+            width: 21px;
+            height: 21px;
+            border: 1px solid;
+            border-color: #fff #808080 #808080 #fff;
+            background-color: #ece9d8;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .title-bar-controls button:active {
+            border-color: #808080 #fff #fff #808080;
+        }
+        .menu-bar {
+            background-color: #ece9d8;
+            padding: 2px 5px;
+            border-bottom: 1px solid #808080;
+        }
+        .menu-bar a {
+            color: #000;
+            text-decoration: none;
+            padding: 2px 8px;
+            margin-right: 5px;
+        }
+        .menu-bar a:hover {
+            background-color: #0a246a;
+            color: #fff;
+        }
+        .toolbar {
+            background-color: #ece9d8;
+            padding: 5px;
+            border-bottom: 1px solid #808080;
+            display: flex;
+            gap: 5px;
+        }
+        .toolbar-btn {
+            background-color: #ece9d8;
+            border: 1px solid;
+            border-color: #fff #808080 #808080 #fff;
+            padding: 3px 10px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .toolbar-btn:hover {
+            background-color: #fff;
+        }
+        .toolbar-btn:active {
+            border-color: #808080 #fff #fff #808080;
+        }
+        .address-bar {
+            background-color: #fff;
+            padding: 3px 5px;
+            border-bottom: 1px solid #808080;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .address-bar label {
+            font-size: 11px;
+        }
+        .address-bar input {
+            flex: 1;
+            border: 1px solid #7f9db9;
+            padding: 2px 5px;
+            font-size: 11px;
+            background-color: #fff;
+        }
+        .main-content {
+            display: flex;
+            background-color: #fff;
+        }
+        .sidebar {
+            width: 180px;
+            background-color: #6b89af;
+            padding: 10px;
+            border-right: 1px solid #808080;
+        }
+        .sidebar-section {
+            background-color: #fff;
+            border: 1px solid #808080;
+            margin-bottom: 10px;
+        }
+        .sidebar-header {
+            background: linear-gradient(to bottom, #fff 0%, #ece9d8 100%);
+            padding: 5px 8px;
+            font-weight: bold;
+            font-size: 11px;
+            border-bottom: 1px solid #808080;
+            color: #0a246a;
+        }
+        .sidebar-content {
+            padding: 8px;
+        }
+        .sidebar-content ul {
+            list-style: none;
+        }
+        .sidebar-content li {
+            padding: 3px 0;
+            border-bottom: 1px dotted #ccc;
+        }
+        .sidebar-content li:last-child {
+            border-bottom: none;
+        }
+        .sidebar-content a {
+            color: #0a246a;
+            text-decoration: none;
+            font-size: 11px;
+        }
+        .sidebar-content a:hover {
+            text-decoration: underline;
+        }
+        .content-area {
+            flex: 1;
+            padding: 15px;
+            background-color: #fff;
+        }
+        .page-header {
+            border-bottom: 2px solid #0a246a;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .page-header h1 {
+            font-size: 18px;
+            color: #0a246a;
+            font-weight: normal;
+        }
+        .page-header .breadcrumb {
+            font-size: 10px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .page-header .breadcrumb a {
+            color: #0a246a;
+        }
+        .alert-box {
+            background-color: #ffffcc;
+            border: 1px solid #cc9900;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .alert-box .alert-header {
+            font-weight: bold;
+            color: #cc6600;
+            margin-bottom: 5px;
+        }
+        .alert-box .alert-header img {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        .news-item {
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            background-color: #fafafa;
+        }
+        .news-item-header {
+            background: linear-gradient(to bottom, #ece9d8 0%, #d4d0c8 100%);
+            padding: 8px 10px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .news-item-header h2 {
+            font-size: 13px;
+            font-weight: bold;
+            color: #0a246a;
+        }
+        .news-item-header h2 a {
+            color: #0a246a;
+            text-decoration: none;
+        }
+        .news-item-header h2 a:hover {
+            text-decoration: underline;
+        }
+        .news-item-header .category {
+            background-color: #0a246a;
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 9px;
+            text-transform: uppercase;
+        }
+        .news-item-body {
+            padding: 10px;
+        }
+        .news-item-body p {
+            margin-bottom: 8px;
+        }
+        .news-item-meta {
+            font-size: 10px;
+            color: #666;
+            border-top: 1px dotted #ccc;
+            padding-top: 8px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .data-table th {
+            background: linear-gradient(to bottom, #ece9d8 0%, #d4d0c8 100%);
+            border: 1px solid #808080;
+            padding: 5px 8px;
+            text-align: left;
+            font-size: 11px;
+        }
+        .data-table td {
+            border: 1px solid #ccc;
+            padding: 5px 8px;
+            font-size: 11px;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        .data-table a {
+            color: #0a246a;
+        }
+        .quick-links {
+            background-color: #ece9d8;
+            border: 1px solid #808080;
+            padding: 10px;
+            margin-top: 15px;
+        }
+        .quick-links h3 {
+            font-size: 12px;
+            color: #0a246a;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #808080;
+            padding-bottom: 5px;
+        }
+        .quick-links ul {
+            list-style: square;
+            margin-left: 20px;
+        }
+        .quick-links li {
+            padding: 2px 0;
+        }
+        .quick-links a {
+            color: #0a246a;
+            text-decoration: none;
+            font-size: 11px;
+        }
+        .quick-links a:hover {
+            text-decoration: underline;
+        }
+        .status-bar {
+            background-color: #ece9d8;
+            border-top: 1px solid #808080;
+            padding: 3px 10px;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .status-bar .status-section {
+            border: 1px solid;
+            border-color: #808080 #fff #fff #808080;
+            padding: 1px 10px;
+            background-color: #ece9d8;
+        }
+        .icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #0a246a;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        .new-badge {
+            display: inline-block;
+            background-color: #ff0000;
+            color: #fff;
+            font-size: 9px;
+            padding: 1px 4px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        .search-box {
+            margin-top: 10px;
+            padding: 8px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+        }
+        .search-box input[type="text"] {
+            width: 100%;
+            padding: 3px 5px;
+            border: 1px solid #7f9db9;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+        .search-box button {
+            background-color: #ece9d8;
+            border: 1px solid;
+            border-color: #fff #808080 #808080 #fff;
+            padding: 3px 15px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <span class="title-bar-text">Slop Bucket Intranet - Microsoft Internet Explorer</span>
+            <div class="title-bar-controls">
+                <button type="button" aria-label="Minimize">_</button>
+                <button type="button" aria-label="Maximize">[]</button>
+                <button type="button" aria-label="Close">X</button>
+            </div>
+        </div>
+
+        <div class="menu-bar">
+            <a href="#">File</a>
+            <a href="#">Edit</a>
+            <a href="#">View</a>
+            <a href="#">Favorites</a>
+            <a href="#">Tools</a>
+            <a href="#">Help</a>
+        </div>
+
+        <div class="toolbar">
+            <button class="toolbar-btn" type="button">Back</button>
+            <button class="toolbar-btn" type="button">Forward</button>
+            <button class="toolbar-btn" type="button">Stop</button>
+            <button class="toolbar-btn" type="button">Refresh</button>
+            <button class="toolbar-btn" type="button">Home</button>
+        </div>
+
+        <div class="address-bar">
+            <label for="address">Address:</label>
+            <input type="text" id="address" value="http://intranet.slopbucket.local/home" readonly>
+        </div>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Navigation</div>
+                    <div class="sidebar-content">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Opinion</a></li>
+                            <li><a href="#">Analysis</a></li>
+                            <li><a href="#">Resources</a></li>
+                            <li><a href="#">Directory</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Quick Links</div>
+                    <div class="sidebar-content">
+                        <ul>
+                            <li><a href="#">Submit Article</a></li>
+                            <li><a href="#">Newsletter</a></li>
+                            <li><a href="#">Archives</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Search</div>
+                    <div class="sidebar-content">
+                        <div class="search-box">
+                            <input type="text" placeholder="Search articles...">
+                            <button type="button">Go</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content-area">
+                <header class="page-header">
+                    <h1>Slop Bucket Intranet Portal</h1>
+                    <p class="breadcrumb"><a href="#">Home</a> &gt; News &gt; Current</p>
+                </header>
+
+                <div class="alert-box">
+                    <p class="alert-header">Important Notice!</p>
+                    <p><strong>BREAKING:</strong> Expert Warns Your Morning Routine May Be Destroying Shareholder Value. <a href="#">Read more...</a></p>
+                </div>
+
+                <article class="news-item">
+                    <header class="news-item-header">
+                        <h2><a href="#">Why Gandalf Would Be a Terrible Project Manager</a> <span class="new-badge">NEW</span></h2>
+                        <span class="category">Breaking</span>
+                    </header>
+                    <div class="news-item-body">
+                        <p>A wizard is never late, nor is he early. He arrives precisely when he means to. Unfortunately, this philosophy has resulted in three consecutive quarters of missed deliverables.</p>
+                        <p class="news-item-meta">Posted: January 12, 2026 2:34 PM | Author: Staff Reporter | Comments: 847</p>
+                    </div>
+                </article>
+
+                <article class="news-item">
+                    <header class="news-item-header">
+                        <h2><a href="#">Sourdough as a Service: The $4B Opportunity VCs Are Missing</a></h2>
+                        <span class="category">Exclusive</span>
+                    </header>
+                    <div class="news-item-body">
+                        <p>Our investigative team examines the subscription fermentation economy and why Silicon Valley is sleeping on the next big thing.</p>
+                        <p class="news-item-meta">Posted: January 12, 2026 11:15 AM | Author: Investigation Team</p>
+                    </div>
+                </article>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="#">Your Coffee Order Is a Personality Disorder</a></td>
+                            <td>Opinion</td>
+                            <td>01/12/2026</td>
+                            <td>Published</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">I Let My Uber Driver Run My Company</a></td>
+                            <td>Analysis</td>
+                            <td>01/11/2026</td>
+                            <td>Published</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">Morning Routine vs Shareholder Value</a></td>
+                            <td>Warning</td>
+                            <td>01/11/2026</td>
+                            <td>Published</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="quick-links">
+                    <h3>Related Resources</h3>
+                    <ul>
+                        <li><a href="#">Thought Leadership Best Practices Guide (PDF)</a></li>
+                        <li><a href="#">Hot Take Submission Form</a></li>
+                        <li><a href="#">Editorial Calendar 2026</a></li>
+                        <li><a href="#">Style Guide for Contributors</a></li>
+                    </ul>
+                </div>
+            </main>
+        </div>
+
+        <footer class="status-bar">
+            <span class="status-section">Done</span>
+            <span class="status-section">Intranet Zone</span>
+            <span class="status-section">Users Online: 847</span>
+        </footer>
+    </div>
+</body>
+</html>

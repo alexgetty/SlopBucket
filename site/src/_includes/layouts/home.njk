@@ -1,0 +1,48 @@
+---
+layout: base.njk
+---
+{% include "partials/ticker.njk" %}
+
+<div class="main-layout">
+    <section class="news-column">
+        <div class="section-title">TODAY'S TOP STORIES</div>
+
+        {% for article in collections.articles %}
+        <article class="news-item{% if loop.first %} featured{% endif %}">
+            <header class="news-header">
+                {% if article.data.label %}
+                <span class="news-label {{ article.data.label | lower }}">{{ article.data.label }}</span>
+                {% endif %}
+                <h2><a href="{{ article.url }}">{{ article.data.title }}</a></h2>
+                {% if article.data.hot %}
+                <span class="hot-badge">HOT!</span>
+                {% endif %}
+                {% if article.data.starburst %}
+                <span class="starburst">{{ article.data.starburst }}</span>
+                {% endif %}
+            </header>
+            <div class="news-body">
+                {{ article.content | excerpt | safe }}
+                {% if article.data.pageRef %}
+                <p class="page-ref">{{ article.data.pageRef }}</p>
+                {% endif %}
+            </div>
+        </article>
+        {% if loop.index == 2 %}
+        <div class="hr-fancy" role="separator"></div>
+        {% endif %}
+        {% else %}
+        <article class="news-item">
+            <header class="news-header">
+                <span class="news-label sources">SOURCES</span>
+                <h2>No Articles Yet</h2>
+            </header>
+            <div class="news-body">
+                Sources familiar with the matter confirm that content is coming soon. Check back later.
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+
+    {% include "partials/sidebar.njk" %}
+</div>

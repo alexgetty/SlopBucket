@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOP BUCKET - Breaking News and Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+        .alert-bar {
+            background-color: #b71c1c;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .alert-bar span {
+            display: inline-block;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { text-shadow: 0 0 5px #fff; }
+            50% { text-shadow: 0 0 20px #fff, 0 0 30px #ff0000; }
+        }
+        header {
+            background: linear-gradient(to bottom, #16213e, #0f0f23);
+            padding: 25px 40px;
+            border-bottom: 3px solid #b71c1c;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 42px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+        .logo span {
+            color: #b71c1c;
+        }
+        .header-right {
+            text-align: right;
+        }
+        .live-badge {
+            display: inline-block;
+            background-color: #b71c1c;
+            color: white;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            animation: pulse-bg 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-bg {
+            0%, 100% { background-color: #b71c1c; }
+            50% { background-color: #d32f2f; }
+        }
+        .datetime {
+            font-size: 12px;
+            color: #999;
+        }
+        nav {
+            background-color: #0f0f23;
+            padding: 0 40px;
+            border-bottom: 1px solid #333;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        nav a {
+            display: block;
+            padding: 14px 22px;
+            color: #ccc;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        nav a:hover,
+        nav a.active {
+            color: #fff;
+            border-bottom-color: #b71c1c;
+            background-color: rgba(183, 28, 28, 0.1);
+        }
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+        .featured-story {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            border: 1px solid #333;
+            border-left: 4px solid #b71c1c;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .featured-story .category {
+            color: #b71c1c;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .featured-story h1 {
+            font-size: 36px;
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        .featured-story .excerpt {
+            font-size: 18px;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        .featured-story .meta {
+            font-size: 12px;
+            color: #666;
+        }
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .story-card {
+            background-color: #16213e;
+            border: 1px solid #333;
+            padding: 20px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .story-card:hover {
+            transform: translateY(-3px);
+            border-color: #b71c1c;
+        }
+        .story-card .category {
+            color: #b71c1c;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .story-card h2 {
+            font-size: 18px;
+            color: #fff;
+            margin: 10px 0;
+            line-height: 1.3;
+        }
+        .story-card h2 a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .story-card h2 a:hover {
+            text-decoration: underline;
+        }
+        .story-card .excerpt {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        .story-card .meta {
+            font-size: 11px;
+            color: #555;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        .section-header h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+        .section-header a {
+            color: #b71c1c;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        .list-stories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .list-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background-color: #16213e;
+            border: 1px solid #333;
+        }
+        .list-item .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #b71c1c;
+            line-height: 1;
+        }
+        .list-item h3 {
+            font-size: 15px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .list-item h3 a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .list-item .meta {
+            font-size: 11px;
+            color: #666;
+        }
+        footer {
+            background-color: #0f0f23;
+            border-top: 1px solid #333;
+            padding: 30px 40px;
+            margin-top: 50px;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        footer p {
+            font-size: 12px;
+            color: #666;
+        }
+        footer a {
+            color: #999;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #b71c1c;
+        }
+        .footer-links {
+            display: flex;
+            gap: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="alert-bar">
+        <span>Breaking News</span> - Expert Warns: Your Morning Routine May Be Destroying Shareholder Value
+    </div>
+
+    <header>
+        <div class="header-content">
+            <h1 class="logo">SLOP<span>BUCKET</span></h1>
+            <div class="header-right">
+                <div class="live-badge">LIVE UPDATES</div>
+                <div class="datetime">Monday, January 12, 2026 | 3:42 PM EST</div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Breaking</a></li>
+            <li><a href="#">Opinion</a></li>
+            <li><a href="#">Analysis</a></li>
+            <li><a href="#">Exclusive</a></li>
+            <li><a href="#">Thought Leadership</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <article class="featured-story">
+            <span class="category">Breaking News</span>
+            <h1>Why Gandalf Would Be a Terrible Project Manager</h1>
+            <p class="excerpt">A wizard is never late, nor is he early. He arrives precisely when he means to. Unfortunately, that approach has led to three failed sprints and a 47% decrease in team velocity.</p>
+            <p class="meta">Updated 23 minutes ago | 1,247 Comments</p>
+        </article>
+
+        <div class="story-grid">
+            <article class="story-card">
+                <span class="category">Exclusive</span>
+                <h2><a href="#">Sourdough as a Service: The $4B Opportunity VCs Are Missing</a></h2>
+                <p class="excerpt">Our investigation reveals why the subscription bread economy is poised for explosive growth.</p>
+                <p class="meta">2 hours ago</p>
+            </article>
+
+            <article class="story-card">
+                <span class="category">Opinion</span>
+                <h2><a href="#">Your Coffee Order Is a Personality Disorder</a></h2>
+                <p class="excerpt">What your morning beverage choice reveals about your deepest psychological wounds.</p>
+                <p class="meta">3 hours ago</p>
+            </article>
+
+            <article class="story-card">
+                <span class="category">Analysis</span>
+                <h2><a href="#">I Let My Uber Driver Run My Company For a Week</a></h2>
+                <p class="excerpt">Here's what happened when I handed the keys to a stranger with a 4.2 star rating.</p>
+                <p class="meta">5 hours ago</p>
+            </article>
+        </div>
+
+        <div class="section-header">
+            <h2>Trending Now</h2>
+            <a href="#">View All</a>
+        </div>
+
+        <div class="list-stories">
+            <article class="list-item">
+                <span class="number">01</span>
+                <div>
+                    <h3><a href="#">Gandalf Project Management Crisis</a></h3>
+                    <p class="meta">Breaking | 1.2K shares</p>
+                </div>
+            </article>
+            <article class="list-item">
+                <span class="number">02</span>
+                <div>
+                    <h3><a href="#">Sourdough as a Service Deep Dive</a></h3>
+                    <p class="meta">Exclusive | 847 shares</p>
+                </div>
+            </article>
+            <article class="list-item">
+                <span class="number">03</span>
+                <div>
+                    <h3><a href="#">Coffee Order Psychology Report</a></h3>
+                    <p class="meta">Opinion | 623 shares</p>
+                </div>
+            </article>
+            <article class="list-item">
+                <span class="number">04</span>
+                <div>
+                    <h3><a href="#">Morning Routine Shareholder Warning</a></h3>
+                    <p class="meta">Expert Take | 412 shares</p>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Slop Bucket Media. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

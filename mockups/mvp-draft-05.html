@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE SLOP BUCKET - News You Can Use</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'MS Sans Serif', Tahoma, Geneva, sans-serif;
+            background: #5f9ea0;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .win-container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #fff #000 #000 #fff;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+        }
+
+        .win-titlebar {
+            background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+            padding: 2px 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .win-titlebar span {
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .win-btns {
+            display: flex;
+            gap: 1px;
+        }
+
+        .win-btns button {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #404040 #404040 #fff;
+            font-size: 9px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .win-menu {
+            background: #c0c0c0;
+            padding: 1px 4px;
+            font-size: 11px;
+            border-bottom: 1px solid #808080;
+        }
+
+        .win-menu span {
+            display: inline-block;
+            padding: 2px 8px;
+            cursor: pointer;
+        }
+
+        .win-menu span:hover {
+            background: #000080;
+            color: #fff;
+        }
+
+        .win-toolbar {
+            background: #c0c0c0;
+            padding: 3px;
+            display: flex;
+            gap: 2px;
+            border-bottom: 1px solid #808080;
+        }
+
+        .win-toolbar button {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #404040 #404040 #fff;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .win-toolbar button:active {
+            border-color: #404040 #fff #fff #404040;
+        }
+
+        .win-address {
+            background: #c0c0c0;
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            border-bottom: 1px solid #808080;
+        }
+
+        .win-address input {
+            flex: 1;
+            border: 1px solid;
+            border-color: #808080 #fff #fff #808080;
+            padding: 2px 4px;
+            background: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        .viewport {
+            background: #fff;
+            margin: 4px;
+            border: 2px solid;
+            border-color: #404040 #fff #fff #404040;
+            overflow: hidden;
+        }
+
+        /* ====== PAGE CONTENT - BEIGE/TAN THEME ====== */
+        .site-banner {
+            background: linear-gradient(180deg, #d4a574 0%, #c4956a 40%, #a07850 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px double #6b4423;
+        }
+
+        .site-banner h1 {
+            font-family: 'Times New Roman', Georgia, serif;
+            font-size: 48px;
+            font-weight: bold;
+            color: #2f1810;
+            text-shadow: 2px 2px 0 #e8d4c0;
+            letter-spacing: 6px;
+        }
+
+        .site-banner .motto {
+            font-size: 14px;
+            color: #4a3020;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .nav-bar {
+            background: #2f1810;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            border-bottom: 3px groove #c0c0c0;
+        }
+
+        .nav-bar a {
+            display: inline-block;
+            color: #f0e0d0;
+            text-decoration: none;
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: bold;
+            border-left: 1px solid #5a4030;
+            border-right: 1px solid #5a4030;
+        }
+
+        .nav-bar a:hover {
+            background: #5a4030;
+            color: #fff;
+        }
+
+        .ticker-bar {
+            background: #000;
+            color: #ffd700;
+            padding: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow: hidden;
+        }
+
+        .ticker-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: roll 18s linear infinite;
+        }
+
+        @keyframes roll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-150%); }
+        }
+
+        .page-layout {
+            display: grid;
+            grid-template-columns: 160px 1fr 160px;
+        }
+
+        .left-rail {
+            background: #f5ebe0;
+            padding: 10px;
+            border-right: 2px groove #d4c4b4;
+            font-size: 11px;
+        }
+
+        .main-content {
+            padding: 15px;
+            background: #fffaf5;
+        }
+
+        .right-rail {
+            background: #f5ebe0;
+            padding: 10px;
+            border-left: 2px groove #d4c4b4;
+            font-size: 11px;
+        }
+
+        .rail-box {
+            background: #fff;
+            border: 2px groove #c0a080;
+            margin-bottom: 10px;
+        }
+
+        .rail-box-head {
+            background: linear-gradient(180deg, #8b6914 0%, #5c4a10 100%);
+            color: #ffd700;
+            padding: 5px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .rail-box-body {
+            padding: 8px;
+        }
+
+        .rail-box-body ul {
+            margin-left: 12px;
+        }
+
+        .rail-box-body li {
+            margin-bottom: 4px;
+        }
+
+        .rail-box-body a {
+            color: #5c4a10;
+        }
+
+        .rail-box-body a:hover {
+            color: #cc0000;
+        }
+
+        .news-header {
+            background: linear-gradient(90deg, #5c4a10 0%, #8b6914 50%, #5c4a10 100%);
+            color: #ffd700;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            border: 2px outset #aa9944;
+        }
+
+        .story-block {
+            background: #fff;
+            border: 2px solid #c0a080;
+            margin-bottom: 12px;
+        }
+
+        .story-block.primary {
+            border: 3px double #8b6914;
+            background: linear-gradient(180deg, #fffdf8 0%, #f5ebe0 100%);
+        }
+
+        .story-top {
+            background: linear-gradient(180deg, #e8dcd0 0%, #d4c8bc 100%);
+            padding: 10px 12px;
+            border-bottom: 1px solid #c0a080;
+        }
+
+        .story-category {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: bold;
+            color: #fff;
+            padding: 2px 6px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .cat-breaking { background: #b22222; }
+        .cat-exclusive { background: #4169e1; }
+        .cat-opinion { background: #6b3fa0; }
+        .cat-analysis { background: #2e8b57; }
+        .cat-warning { background: #cd853f; }
+
+        .story-top h2 {
+            display: inline;
+            font-size: 14px;
+            color: #2f1810;
+        }
+
+        .story-top h2 a {
+            color: #4a3020;
+            text-decoration: none;
+        }
+
+        .story-top h2 a:hover {
+            color: #8b0000;
+            text-decoration: underline;
+        }
+
+        .new-flash {
+            display: inline-block;
+            background: #ff0000;
+            color: #fff;
+            font-size: 8px;
+            padding: 1px 4px;
+            margin-left: 6px;
+            animation: blink-new 0.6s step-end infinite;
+        }
+
+        @keyframes blink-new {
+            50% { opacity: 0; }
+        }
+
+        .story-text {
+            padding: 12px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #3a2a1a;
+        }
+
+        .story-meta {
+            padding: 6px 12px;
+            font-size: 10px;
+            color: #888;
+            background: #f0e8e0;
+            border-top: 1px solid #d4c4b4;
+        }
+
+        .fancy-divider {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .fancy-divider hr {
+            border: none;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #8b6914, transparent);
+        }
+
+        .visitor-counter {
+            background: #1a1a1a;
+            padding: 10px;
+            text-align: center;
+            border: 3px ridge #666;
+        }
+
+        .visitor-counter p {
+            color: #aaa;
+            font-size: 9px;
+            margin-bottom: 4px;
+        }
+
+        .visitor-counter .num {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #00ff00;
+            background: #000;
+            padding: 3px 10px;
+            border: 1px inset #333;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .guestbook-link {
+            display: block;
+            background: linear-gradient(180deg, #ffd700 0%, #daa520 100%);
+            color: #2f1810;
+            text-align: center;
+            padding: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 11px;
+            border: 2px outset #ffd700;
+            margin-top: 10px;
+        }
+
+        .guestbook-link:hover {
+            background: linear-gradient(180deg, #ffe44d 0%, #ffd700 100%);
+        }
+
+        .page-footer {
+            background: linear-gradient(180deg, #d4c4b4 0%, #c0a080 100%);
+            padding: 15px;
+            text-align: center;
+            font-size: 10px;
+            color: #4a3020;
+            border-top: 3px groove #e0d0c0;
+        }
+
+        .page-footer a {
+            color: #5c4a10;
+        }
+
+        .page-footer .sep {
+            margin: 8px 0;
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #6b4423, transparent);
+        }
+
+        .status-bar {
+            background: #c0c0c0;
+            padding: 2px 4px;
+            font-size: 10px;
+            display: flex;
+            border-top: 1px solid #fff;
+        }
+
+        .status-bar span {
+            border: 1px solid;
+            border-color: #808080 #fff #fff #808080;
+            padding: 1px 6px;
+            margin-right: 2px;
+        }
+
+        .status-bar span:first-child {
+            flex: 1;
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .ticker-text, .new-flash { animation: none; }
+            .new-flash { opacity: 1; }
+        }
+
+        :focus {
+            outline: 2px solid #5c4a10;
+            outline-offset: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="win-container">
+        <header class="win-titlebar">
+            <span>The Slop Bucket - InfoNavigator 3.2</span>
+            <div class="win-btns">
+                <button type="button" aria-label="Minimize">_</button>
+                <button type="button" aria-label="Maximize">[]</button>
+                <button type="button" aria-label="Close">X</button>
+            </div>
+        </header>
+
+        <nav class="win-menu" aria-label="Browser menu">
+            <span tabindex="0">File</span>
+            <span tabindex="0">Edit</span>
+            <span tabindex="0">View</span>
+            <span tabindex="0">Navigate</span>
+            <span tabindex="0">Bookmarks</span>
+            <span tabindex="0">Options</span>
+            <span tabindex="0">Help</span>
+        </nav>
+
+        <div class="win-toolbar" role="toolbar" aria-label="Navigation">
+            <button type="button">Back</button>
+            <button type="button">Forward</button>
+            <button type="button">Stop</button>
+            <button type="button">Reload</button>
+            <button type="button">Home</button>
+            <button type="button">Find</button>
+            <button type="button">Print</button>
+        </div>
+
+        <div class="win-address">
+            <label for="url">Location:</label>
+            <input type="text" id="url" value="http://slopbucket.org/index.html" readonly>
+        </div>
+
+        <main class="viewport">
+            <header class="site-banner">
+                <h1>THE SLOP BUCKET</h1>
+                <p class="motto">"Shoveling Truth Since 1997"</p>
+            </header>
+
+            <nav class="nav-bar" aria-label="Site navigation">
+                <a href="#">HOME</a>
+                <a href="#">NEWS</a>
+                <a href="#">OPINION</a>
+                <a href="#">ANALYSIS</a>
+                <a href="#">ARCHIVE</a>
+                <a href="#">ABOUT</a>
+            </nav>
+
+            <div class="ticker-bar" role="marquee" aria-live="off">
+                <span class="ticker-text">
+                    +++ BREAKING: Gandalf Would Be a Terrible PM +++ EXCLUSIVE: $4B Sourdough Opportunity +++ OPINION: Coffee Orders = Personality Disorders +++ Uber Driver CEO Week +++ Morning Routines Destroy Value +++
+                </span>
+            </div>
+
+            <div class="page-layout">
+                <aside class="left-rail" aria-label="Left sidebar">
+                    <div class="rail-box">
+                        <div class="rail-box-head">Navigation</div>
+                        <div class="rail-box-body">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Latest News</a></li>
+                                <li><a href="#">Hot Takes</a></li>
+                                <li><a href="#">Deep Dives</a></li>
+                                <li><a href="#">Archives</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="rail-box">
+                        <div class="rail-box-head">Topics</div>
+                        <div class="rail-box-body">
+                            <ul>
+                                <li><a href="#">Management</a></li>
+                                <li><a href="#">Startups</a></li>
+                                <li><a href="#">Wellness</a></li>
+                                <li><a href="#">Finance</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <section class="main-content">
+                    <div class="news-header">TODAY'S TOP STORIES</div>
+
+                    <article class="story-block primary">
+                        <header class="story-top">
+                            <span class="story-category cat-breaking">BREAKING</span>
+                            <h2><a href="#">Why Gandalf Would Be a Terrible Project Manager</a></h2>
+                            <span class="new-flash">NEW!</span>
+                        </header>
+                        <div class="story-text">
+                            "A wizard is never late, nor is he early. He arrives precisely when he means to." This mystical approach to scheduling has caused three consecutive quarters of missed deadlines. The fellowship's Jira board is in shambles.
+                        </div>
+                        <div class="story-meta">Posted: January 12, 2026 | 847 Comments</div>
+                    </article>
+
+                    <article class="story-block">
+                        <header class="story-top">
+                            <span class="story-category cat-exclusive">EXCLUSIVE</span>
+                            <h2><a href="#">Sourdough as a Service - The $4B Opportunity VCs Are Missing</a></h2>
+                        </header>
+                        <div class="story-text">
+                            Subscription-based fermentation is the next frontier of disruption. Our analysis reveals why artisanal yeast markets are primed for exponential growth. VCs need to wake up and smell the starter.
+                        </div>
+                        <div class="story-meta">Posted: January 12, 2026 | Investigative Team</div>
+                    </article>
+
+                    <div class="fancy-divider"><hr></div>
+
+                    <article class="story-block">
+                        <header class="story-top">
+                            <span class="story-category cat-opinion">OPINION</span>
+                            <h2><a href="#">Your Coffee Order Is a Personality Disorder</a></h2>
+                        </header>
+                        <div class="story-text">
+                            That oat milk latte with an extra shot is not a coffee order. It's a clinical manifestation of unresolved issues. Our psychology correspondent explains what your beverage says about your psyche.
+                        </div>
+                        <div class="story-meta">Posted: January 11, 2026 | Dr. A. Expert</div>
+                    </article>
+
+                    <article class="story-block">
+                        <header class="story-top">
+                            <span class="story-category cat-analysis">ANALYSIS</span>
+                            <h2><a href="#">I Let My Uber Driver Run My Company For a Week</a></h2>
+                        </header>
+                        <div class="story-text">
+                            He had a perfect rating and opinions about crypto. What could possibly go wrong? An inside look at the most unconventional leadership experiment of the decade.
+                        </div>
+                        <div class="story-meta">Posted: January 11, 2026 | Guest Contributor</div>
+                    </article>
+
+                    <article class="story-block">
+                        <header class="story-top">
+                            <span class="story-category cat-warning">WARNING</span>
+                            <h2><a href="#">Your Morning Routine May Be Destroying Shareholder Value</a></h2>
+                            <span class="new-flash">NEW!</span>
+                        </header>
+                        <div class="story-text">
+                            New research links your pour-over coffee ritual to declining market confidence. Every minute you spend on "self-care" is a minute investors spend questioning your commitment.
+                        </div>
+                        <div class="story-meta">Posted: January 10, 2026 | Markets Desk</div>
+                    </article>
+                </section>
+
+                <aside class="right-rail" aria-label="Right sidebar">
+                    <div class="rail-box">
+                        <div class="rail-box-head">Popular</div>
+                        <div class="rail-box-body">
+                            <ul>
+                                <li><a href="#">Gandalf PM</a></li>
+                                <li><a href="#">Sourdough $4B</a></li>
+                                <li><a href="#">Coffee Trauma</a></li>
+                                <li><a href="#">Uber CEO</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="visitor-counter">
+                        <p>You are visitor:</p>
+                        <span class="num">0847293</span>
+                    </div>
+
+                    <a href="#" class="guestbook-link">SIGN GUESTBOOK</a>
+
+                    <div class="rail-box" style="margin-top: 10px;">
+                        <div class="rail-box-head">Contact</div>
+                        <div class="rail-box-body">
+                            <p><a href="mailto:tips@slopbucket.org">tips@slopbucket.org</a></p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <footer class="page-footer">
+                <p>Copyright 1997-2026 The Slop Bucket. All Rights Reserved.</p>
+                <hr class="sep">
+                <p>
+                    <a href="#">Home</a> |
+                    <a href="#">About</a> |
+                    <a href="#">Contact</a> |
+                    <a href="#">Privacy</a> |
+                    <a href="#">Advertise</a>
+                </p>
+                <p style="margin-top:6px;">Best viewed at 800x600 with InfoNavigator 3.0+</p>
+            </footer>
+        </main>
+
+        <div class="status-bar">
+            <span>Done</span>
+            <span>Local intranet</span>
+        </div>
+    </div>
+</body>
+</html>

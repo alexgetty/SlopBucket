@@ -1,0 +1,19 @@
+---
+layout: base.njk
+---
+<div class="article-content">
+    <a href="/" class="back-link">&laquo; Back to Headlines</a>
+
+    {% if label %}
+    <span class="news-label {{ label | lower }}">{{ label }}</span>
+    {% endif %}
+
+    <h1>{{ title }}</h1>
+
+    <div class="article-meta">
+        Published {{ date | readableDate }}
+        {% if author %} | By {{ author }}{% endif %}
+    </div>
+
+    {{ content | safe }}
+</div>

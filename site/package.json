@@ -1,0 +1,13 @@
+{
+  "name": "slop-bucket",
+  "version": "1.0.0",
+  "description": "Your Premier Destination for Thought Leadership",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "clean": "rm -rf public"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

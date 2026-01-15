@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOP BUCKET - Your Source for Premium Content</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Tahoma, 'MS Sans Serif', Geneva, sans-serif;
+            background-color: #008080;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2' fill='%23006666'/%3E%3C/svg%3E");
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .browser-window {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #c0c0c0;
+            border: 3px outset #dfdfdf;
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        .title-bar {
+            background: linear-gradient(90deg, #000080 0%, #0000cd 50%, #000080 100%);
+            padding: 3px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title-bar-text {
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 2px;
+        }
+
+        .window-controls button {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 2px outset #fff;
+            font-size: 9px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0;
+            line-height: 10px;
+        }
+
+        .menu-bar {
+            background: #c0c0c0;
+            padding: 2px 4px;
+            border-bottom: 1px solid #808080;
+            font-size: 11px;
+        }
+
+        .menu-bar span {
+            padding: 2px 8px;
+            cursor: pointer;
+        }
+
+        .menu-bar span:hover {
+            background: #000080;
+            color: #fff;
+        }
+
+        .toolbar {
+            background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+            padding: 4px;
+            border-bottom: 2px groove #fff;
+            display: flex;
+            gap: 4px;
+        }
+
+        .toolbar button {
+            background: linear-gradient(180deg, #dfdfdf 0%, #c0c0c0 50%, #a0a0a0 100%);
+            border: 2px outset #fff;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .toolbar button:active {
+            border-style: inset;
+        }
+
+        .address-bar {
+            background: #c0c0c0;
+            padding: 4px 8px;
+            border-bottom: 2px groove #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+        }
+
+        .address-bar input {
+            flex: 1;
+            border: 2px inset #fff;
+            padding: 2px 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            background: #fff;
+        }
+
+        .content-frame {
+            background: #fff;
+            margin: 8px;
+            border: 2px inset #808080;
+            min-height: 500px;
+        }
+
+        /* ====== WEBSITE CONTENT ====== */
+        .site-header {
+            background: linear-gradient(180deg, #ffcc00 0%, #ff9900 50%, #ff6600 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px ridge #cc6600;
+        }
+
+        .site-header h1 {
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: 56px;
+            color: #000;
+            text-shadow:
+                -2px -2px 0 #fff,
+                2px -2px 0 #fff,
+                -2px 2px 0 #fff,
+                2px 2px 0 #fff,
+                4px 4px 0 #808080;
+            letter-spacing: 3px;
+        }
+
+        .site-header p {
+            font-size: 16px;
+            color: #800000;
+            font-weight: bold;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Hot News Alert Strip */
+        .hot-news-strip {
+            background: #ffff00;
+            padding: 8px 15px;
+            text-align: center;
+            border-top: 3px solid #ff0000;
+            border-bottom: 3px solid #ff0000;
+        }
+
+        .hot-news-strip .blink-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #cc0000;
+            animation: blink 0.8s step-end infinite;
+        }
+
+        .hot-news-strip a {
+            color: #000080;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Breaking News Ticker */
+        .news-ticker {
+            background: #000080;
+            color: #00ff00;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow: hidden;
+            border-top: 2px solid #0000cd;
+            border-bottom: 2px solid #0000cd;
+        }
+
+        .ticker-label {
+            display: inline-block;
+            background: #ff0000;
+            color: #fff;
+            padding: 2px 8px;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 11px;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(80%); }
+            100% { transform: translateX(-180%); }
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+        }
+
+        .news-column {
+            padding: 15px;
+            border-right: 3px groove #c0c0c0;
+            background: #f8f8f8;
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, #cc0000 0%, #ff3300 50%, #cc0000 100%);
+            color: #fff;
+            padding: 8px 14px;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border: 3px outset #ff6666;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .news-item {
+            background: #fff;
+            border: 3px groove #c0c0c0;
+            margin-bottom: 15px;
+        }
+
+        .news-item.featured {
+            background: linear-gradient(180deg, #fff8e0 0%, #ffe8a0 100%);
+            border: 4px ridge #cc9900;
+        }
+
+        .news-header {
+            background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
+            padding: 10px 12px;
+            border-bottom: 2px groove #fff;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .news-label {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: bold;
+            color: #fff;
+            padding: 3px 8px;
+            border: 2px outset;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+        }
+
+        .news-label.breaking { background: #cc0000; border-color: #ff6666; }
+        .news-label.exclusive { background: #0066cc; border-color: #66aaff; }
+        .news-label.opinion { background: #663399; border-color: #9966cc; }
+        .news-label.analysis { background: #006600; border-color: #66aa66; }
+        .news-label.warning { background: #cc6600; border-color: #ffaa66; }
+        .news-label.sources { background: #333333; border-color: #666666; }
+        .news-label.study { background: #990099; border-color: #cc66cc; }
+
+        .news-item h2 {
+            flex: 1;
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: 18px;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .news-item h2 a {
+            color: #000080;
+            text-decoration: none;
+        }
+
+        .news-item h2 a:hover {
+            color: #cc0000;
+            text-decoration: underline;
+        }
+
+        .hot-badge {
+            background: #ff0000;
+            color: #ffff00;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 2px 6px;
+            animation: pulse 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .starburst {
+            display: inline-block;
+            background: #ff0000;
+            color: #ffcc00;
+            font-family: Impact, sans-serif;
+            font-size: 11px;
+            padding: 4px 8px;
+            transform: rotate(5deg);
+            margin-left: 8px;
+        }
+
+        .news-body {
+            padding: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .page-ref {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #cc0000;
+            font-weight: bold;
+        }
+
+        .hr-fancy {
+            height: 8px;
+            background: linear-gradient(90deg,
+                #ff0000 0%, #ff9900 17%, #ffff00 33%,
+                #00ff00 50%, #0099ff 67%, #9900ff 83%, #ff0000 100%);
+            margin: 15px 0;
+            border: 1px solid #808080;
+        }
+
+        .sidebar {
+            background: #e0e0e0;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .sidebar-box {
+            background: linear-gradient(180deg, #ffffcc 0%, #ffff99 100%);
+            border: 3px ridge #cc9900;
+            padding: 10px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-box h3 {
+            background: linear-gradient(90deg, #996633 0%, #cc9933 50%, #996633 100%);
+            color: #fff;
+            margin: -10px -10px 10px -10px;
+            padding: 6px 10px;
+            font-size: 11px;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .sidebar-box ul {
+            margin-left: 15px;
+        }
+
+        .sidebar-box li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-box a {
+            color: #003399;
+        }
+
+        .counter-box {
+            background: #000;
+            color: #00ff00;
+            padding: 12px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            border: 4px ridge #666;
+        }
+
+        .counter-box p {
+            font-size: 10px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .counter-box .count {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #ff0000;
+            background: #200000;
+            display: inline-block;
+            padding: 5px 12px;
+            border: 2px inset #600;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        .guestbook-btn {
+            display: block;
+            background: linear-gradient(180deg, #00cc00 0%, #009900 50%, #006600 100%);
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            border: 3px outset #00cc00;
+            margin-top: 12px;
+            text-shadow: 1px 1px 0 #003300;
+        }
+
+        .guestbook-btn:hover {
+            background: linear-gradient(180deg, #00ff00 0%, #00cc00 50%, #009900 100%);
+        }
+
+        .guestbook-btn:active {
+            border-style: inset;
+        }
+
+        .awards-box {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 9px;
+        }
+
+        .awards-box span {
+            display: inline-block;
+            border: 1px solid #999;
+            padding: 3px 6px;
+            margin: 2px;
+            background: #c0c0c0;
+        }
+
+        .footer {
+            background: linear-gradient(180deg, #c0c0c0 0%, #909090 100%);
+            text-align: center;
+            padding: 12px;
+            font-size: 10px;
+            border-top: 3px groove #e0e0e0;
+        }
+
+        .footer a {
+            color: #000080;
+            margin: 0 5px;
+        }
+
+        .footer hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, #909090, #606060, #909090);
+            margin: 8px 0;
+        }
+
+        .footer .tagline {
+            font-style: italic;
+            margin-top: 6px;
+            color: #444;
+        }
+
+        .status-bar {
+            background: #c0c0c0;
+            padding: 3px 8px;
+            font-size: 11px;
+            border-top: 2px groove #fff;
+            display: flex;
+            gap: 10px;
+        }
+
+        .status-section {
+            background: #fff;
+            border: 1px inset #808080;
+            padding: 1px 8px;
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .ticker-content { animation: none; }
+            .blink-text { animation: none; }
+            .hot-badge { animation: none; }
+        }
+
+        :focus {
+            outline: 2px solid #000080;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-window">
+        <header class="title-bar">
+            <span class="title-bar-text">Slop Bucket - WebSurfer Pro 3.0</span>
+            <div class="window-controls">
+                <button type="button" aria-label="Minimize">_</button>
+                <button type="button" aria-label="Maximize">[]</button>
+                <button type="button" aria-label="Close">X</button>
+            </div>
+        </header>
+
+        <nav class="menu-bar" aria-label="Browser menu">
+            <span tabindex="0">File</span>
+            <span tabindex="0">Edit</span>
+            <span tabindex="0">View</span>
+            <span tabindex="0">Go</span>
+            <span tabindex="0">Bookmarks</span>
+            <span tabindex="0">Help</span>
+        </nav>
+
+        <div class="toolbar" role="toolbar" aria-label="Navigation">
+            <button type="button">Back</button>
+            <button type="button">Forward</button>
+            <button type="button">Stop</button>
+            <button type="button">Refresh</button>
+            <button type="button">Home</button>
+            <button type="button">Search</button>
+            <button type="button">Print</button>
+        </div>
+
+        <div class="address-bar">
+            <label for="url">Address:</label>
+            <input type="text" id="url" value="http://www.slopbucket.news/index.htm" readonly>
+        </div>
+
+        <main class="content-frame">
+            <header class="site-header">
+                <h1>SLOP BUCKET</h1>
+                <p>Your Premier Destination for Thought Leadership</p>
+            </header>
+
+            <div class="hot-news-strip">
+                <span class="blink-text">!!! HOT NEWS !!!</span>
+                <span>Study Finds Thing You Already Believe - </span>
+                <a href="#">READ MORE</a>
+            </div>
+
+            <div class="news-ticker" role="marquee" aria-live="off">
+                <span class="ticker-label">BREAKING</span>
+                <span class="ticker-content">+++ Local Man Has Opinion +++ Gandalf Would Be a TERRIBLE Project Manager +++ Sources Familiar With The Matter Say Something Is Happening +++ Sourdough as a Service: VCs are SLEEPING on This! +++ Your Coffee Order is a Personality Disorder +++ MORE INSIDE! +++</span>
+            </div>
+
+            <div class="main-layout">
+                <section class="news-column">
+                    <div class="section-title">TODAY'S TOP STORIES</div>
+
+                    <article class="news-item featured">
+                        <header class="news-header">
+                            <span class="news-label breaking">BREAKING</span>
+                            <h2><a href="#">Why Gandalf Would Be a Terrible Project Manager</a></h2>
+                            <span class="hot-badge">HOT!</span>
+                        </header>
+                        <div class="news-body">
+                            "A wizard is never late, nor is he early." Great philosophy, terrible for sprint planning. Our experts analyze why Middle Earth's most powerful consultant would never survive a quarterly review. His refusal to share documentation alone is grounds for a PIP.
+                            <p class="page-ref">FULL ANALYSIS ON PAGE 4</p>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-header">
+                            <span class="news-label sources">SOURCES</span>
+                            <h2><a href="#">Sources Familiar With The Matter Say Something Is Happening</a> <span class="starburst">WOW!</span></h2>
+                        </header>
+                        <div class="news-body">
+                            Multiple anonymous sources who requested anonymity because they weren't authorized to speak confirm that events are currently occurring. The situation remains developing as it develops. More details to follow when we learn what this is about.
+                            <p class="page-ref">CONTINUED ON PAGE 7</p>
+                        </div>
+                    </article>
+
+                    <div class="hr-fancy" role="separator"></div>
+
+                    <article class="news-item">
+                        <header class="news-header">
+                            <span class="news-label study">STUDY</span>
+                            <h2><a href="#">Study Finds Thing You Already Believe</a></h2>
+                        </header>
+                        <div class="news-body">
+                            Researchers at a university have published findings that confirm what you specifically thought all along. Critics of the study are wrong and probably haven't even read it. Share this with people who disagreed with you.
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-header">
+                            <span class="news-label exclusive">EXCLUSIVE</span>
+                            <h2><a href="#">Sourdough as a Service - The $4B Opportunity VCs Are Missing</a></h2>
+                        </header>
+                        <div class="news-body">
+                            Subscription fermentation is the next frontier. Our deep dive into artisanal yeast markets reveals the unicorn hiding in your kitchen. Forget SaaS, the future is SaaS.
+                            <p class="page-ref">INVESTOR DECK ON PAGE 12</p>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-header">
+                            <span class="news-label opinion">OPINION</span>
+                            <h2><a href="#">Your Coffee Order Is a Personality Disorder</a></h2>
+                        </header>
+                        <div class="news-body">
+                            Oat milk latte with an extra shot? That's a cry for help dressed as a dairy alternative. A clinical perspective on beverage-based pathology from someone who watched a psychology documentary once.
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-header">
+                            <span class="news-label breaking">BREAKING</span>
+                            <h2><a href="#">Local Man Has Opinion</a></h2>
+                            <span class="hot-badge">NEW!</span>
+                        </header>
+                        <div class="news-body">
+                            Area resident weighs in on complex geopolitical situation he learned about 15 minutes ago. "I've done my research," says man who has not done research. Family members report he is "very confident" about this.
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-header">
+                            <span class="news-label analysis">ANALYSIS</span>
+                            <h2><a href="#">I Let My Uber Driver Run My Company For a Week</a></h2>
+                        </header>
+                        <div class="news-body">
+                            He had 5 stars and opinions about crypto. What followed was a masterclass in delegation, disruption, and why ratings systems need rethinking. Spoiler: we pivoted to blockchain.
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <header class="news-header">
+                            <span class="news-label warning">WARNING</span>
+                            <h2><a href="#">Your Morning Routine May Be Destroying Shareholder Value</a></h2>
+                        </header>
+                        <div class="news-body">
+                            New research suggests your self-care rituals are directly correlated with market volatility. That pour-over coffee? Meditation practice? Investors are watching you sleep in and they are not impressed.
+                        </div>
+                    </article>
+                </section>
+
+                <aside class="sidebar" aria-label="Sidebar">
+                    <div class="sidebar-box">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#">Home Page</a></li>
+                            <li><a href="#">Archives</a></li>
+                            <li><a href="#">Submit Story</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-box">
+                        <h3>Hot Topics</h3>
+                        <ul>
+                            <li><a href="#">#GandalfGate</a></li>
+                            <li><a href="#">#SourdoughIPO</a></li>
+                            <li><a href="#">#LocalManOpinion</a></li>
+                            <li><a href="#">#SourcesSay</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="counter-box">
+                        <p>YOU ARE VISITOR:</p>
+                        <div class="count">0038472</div>
+                    </div>
+
+                    <a href="#" class="guestbook-btn">SIGN OUR GUESTBOOK!</a>
+
+                    <div class="awards-box">
+                        <span>[Best of Web 97]</span>
+                        <span>[Cool Site Award]</span>
+                        <span>[Top 5% of Web]</span>
+                    </div>
+                </aside>
+            </div>
+
+            <footer class="footer">
+                <p>Copyright 1997-2026 Slop Bucket Media Inc. All Rights Reserved.</p>
+                <hr>
+                <p><a href="#">Home</a> | <a href="#">Sitemap</a> | <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Advertise</a></p>
+                <p class="tagline">For Entertainment Purposes Only. Any Resemblance to Actual Journalism is Coincidental.</p>
+                <p style="margin-top: 6px;">Best viewed at 800x600 with 256 colors</p>
+            </footer>
+        </main>
+
+        <div class="status-bar">
+            <span class="status-section">Done</span>
+            <span class="status-section">Zone: Internet</span>
+        </div>
+    </div>
+</body>
+</html>

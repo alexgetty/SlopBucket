@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slop Bucket Prompt Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .subtitle {
+      color: #888;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #333;
+      color: #fff;
+      border: 2px solid #555;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #444;
+      border-color: #777;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button.primary {
+      background: #2d5a27;
+      border-color: #3d7a37;
+    }
+
+    button.primary:hover {
+      background: #3d7a37;
+    }
+
+    .status {
+      padding: 1rem;
+      background: #252525;
+      border-left: 3px solid #555;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .status.loaded {
+      border-color: #3d7a37;
+    }
+
+    .output {
+      background: #252525;
+      padding: 2rem;
+      border: 1px solid #333;
+      min-height: 300px;
+    }
+
+    .output h2 {
+      margin-top: 0;
+      color: #fff;
+      font-size: 1.3rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.5rem;
+    }
+
+    .section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-label {
+      font-weight: bold;
+      color: #888;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-content {
+      color: #ccc;
+      white-space: pre-wrap;
+    }
+
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .keyword {
+      background: #333;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.8rem;
+      border-radius: 3px;
+      color: #aaa;
+    }
+
+    .empty-state {
+      color: #666;
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    .counts {
+      display: flex;
+      gap: 2rem;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Slop Bucket</h1>
+  <p class="subtitle">Prompt Generator for Human-Written Satire</p>
+
+  <div class="controls">
+    <button id="loadBtn">Load Folder</button>
+    <button id="generateBtn" class="primary" disabled>Generate Prompt</button>
+  </div>
+
+  <div class="status" id="status">
+    Click "Load Folder" and select the generator folder to load your archetypes, subjects, and constraints.
+  </div>
+
+  <div class="output" id="output">
+    <div class="empty-state">Your generated prompt will appear here.</div>
+  </div>
+
+  <script>
+    const state = {
+      archetypes: [],
+      subjects: [],
+      constraints: [],
+      loaded: false
+    };
+
+    const loadBtn = document.getElementById('loadBtn');
+    const generateBtn = document.getElementById('generateBtn');
+    const statusEl = document.getElementById('status');
+    const outputEl = document.getElementById('output');
+
+    // Parse frontmatter from markdown content
+    function parseFrontmatter(content) {
+      const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+      if (!match) return { frontmatter: {}, body: content };
+
+      const frontmatter = {};
+      match[1].split('\n').forEach(line => {
+        const [key, ...valueParts] = line.split(':');
+        if (key && valueParts.length) {
+          frontmatter[key.trim()] = valueParts.join(':').trim();
+        }
+      });
+
+      return { frontmatter, body: match[2].trim() };
+    }
+
+    // Extract title from markdown body
+    function extractTitle(body) {
+      const match = body.match(/^#\s+(.+)$/m);
+      return match ? match[1] : 'Untitled';
+    }
+
+    // Extract keywords from markdown body
+    function extractKeywords(body) {
+      const match = body.match(/\*\*Keywords:\*\*\s*(.+)$/m);
+      if (!match) return [];
+      return match[1].split(',').map(k => k.trim());
+    }
+
+    // Get description paragraph from body
+    function getDescription(body) {
+      const lines = body.split('\n\n');
+      // Skip title, get first paragraph(s) of content
+      return lines.slice(1, 3).join('\n\n');
+    }
+
+    // Create a section element
+    function createSection(label, items, showKeywords = false) {
+      const section = document.createElement('div');
+      section.className = 'section';
+
+      const labelEl = document.createElement('div');
+      labelEl.className = 'section-label';
+      labelEl.textContent = label;
+      section.appendChild(labelEl);
+
+      const allKeywords = [];
+
+      items.forEach(item => {
+        const titleEl = document.createElement('div');
+        titleEl.className = 'section-title';
+        titleEl.textContent = item.title;
+        section.appendChild(titleEl);
+
+        const contentEl = document.createElement('div');
+        contentEl.className = 'section-content';
+        contentEl.textContent = getDescription(item.body);
+        section.appendChild(contentEl);
+
+        if (showKeywords && item.keywords) {
+          allKeywords.push(...item.keywords);
+        }
+      });
+
+      if (showKeywords && allKeywords.length > 0) {
+        const keywordsEl = document.createElement('div');
+        keywordsEl.className = 'keywords';
+        allKeywords.forEach(kw => {
+          const kwSpan = document.createElement('span');
+          kwSpan.className = 'keyword';
+          kwSpan.textContent = kw;
+          keywordsEl.appendChild(kwSpan);
+        });
+        section.appendChild(keywordsEl);
+      }
+
+      return section;
+    }
+
+    // Load folder using File System Access API
+    loadBtn.addEventListener('click', async () => {
+      try {
+        const dirHandle = await window.showDirectoryPicker();
+
+        state.archetypes = [];
+        state.subjects = [];
+        state.constraints = [];
+
+        for await (const entry of dirHandle.values()) {
+          if (entry.kind === 'file' && entry.name.endsWith('.md') && !entry.name.includes('-hub')) {
+            const file = await entry.getFile();
+            const content = await file.text();
+            const { frontmatter, body } = parseFrontmatter(content);
+
+            const item = {
+              filename: entry.name,
+              title: extractTitle(body),
+              body: body,
+              keywords: extractKeywords(body),
+              type: frontmatter.type,
+              category: frontmatter.category
+            };
+
+            if (frontmatter.type === 'archetype') {
+              state.archetypes.push(item);
+            } else if (frontmatter.type === 'subject') {
+              state.subjects.push(item);
+            } else if (frontmatter.type === 'constraint') {
+              state.constraints.push(item);
+            }
+          }
+        }
+
+        state.loaded = true;
+        generateBtn.disabled = false;
+        statusEl.className = 'status loaded';
+
+        // Clear and rebuild status
+        statusEl.textContent = '';
+        const statusText = document.createTextNode('Loaded successfully!');
+        statusEl.appendChild(statusText);
+
+        const countsEl = document.createElement('div');
+        countsEl.className = 'counts';
+
+        const archetypeCount = document.createElement('span');
+        archetypeCount.textContent = state.archetypes.length + ' archetypes';
+        countsEl.appendChild(archetypeCount);
+
+        const subjectCount = document.createElement('span');
+        subjectCount.textContent = state.subjects.length + ' subjects';
+        countsEl.appendChild(subjectCount);
+
+        const constraintCount = document.createElement('span');
+        constraintCount.textContent = state.constraints.length + ' constraints';
+        countsEl.appendChild(constraintCount);
+
+        statusEl.appendChild(countsEl);
+
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          statusEl.textContent = 'Error loading folder: ' + err.message;
+        }
+      }
+    });
+
+    // Generate random prompt
+    generateBtn.addEventListener('click', () => {
+      if (!state.loaded) return;
+
+      const archetype = state.archetypes[Math.floor(Math.random() * state.archetypes.length)];
+
+      // Pick 1-2 subjects
+      const shuffledSubjects = [...state.subjects].sort(() => Math.random() - 0.5);
+      const numSubjects = Math.random() > 0.5 ? 2 : 1;
+      const selectedSubjects = shuffledSubjects.slice(0, numSubjects);
+
+      // Pick 1-2 constraints
+      const shuffledConstraints = [...state.constraints].sort(() => Math.random() - 0.5);
+      const numConstraints = Math.random() > 0.5 ? 2 : 1;
+      const selectedConstraints = shuffledConstraints.slice(0, numConstraints);
+
+      // Clear output and rebuild
+      outputEl.textContent = '';
+
+      const heading = document.createElement('h2');
+      heading.textContent = 'Your Writing Prompt';
+      outputEl.appendChild(heading);
+
+      // Add archetype section
+      outputEl.appendChild(createSection('Archetype', [archetype], false));
+
+      // Add subjects section
+      const subjectLabel = 'Subject' + (selectedSubjects.length > 1 ? 's' : '');
+      outputEl.appendChild(createSection(subjectLabel, selectedSubjects, true));
+
+      // Add constraints section
+      const constraintLabel = 'Constraint' + (selectedConstraints.length > 1 ? 's' : '');
+      outputEl.appendChild(createSection(constraintLabel, selectedConstraints, false));
+    });
+  </script>
+</body>
+</html>

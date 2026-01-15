@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOP BUCKET - Premium Content Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Verdana, Tahoma, sans-serif;
+            background: #800000;
+            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 0 L50 25 L25 50 L0 25Z' fill='none' stroke='%23660000' stroke-width='1'/%3E%3C/svg%3E");
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .browser-frame {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #c0c0c0;
+            border: 3px solid;
+            border-color: #dfdfdf #404040 #404040 #dfdfdf;
+        }
+
+        .chrome-bar {
+            background: linear-gradient(90deg, #000080 0%, #4040a0 40%, #000080 100%);
+            padding: 3px 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chrome-bar span {
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .chrome-btns button {
+            width: 14px;
+            height: 12px;
+            margin-left: 1px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #808080 #808080 #fff;
+            font-size: 8px;
+            cursor: pointer;
+        }
+
+        .menu-strip {
+            background: #c0c0c0;
+            padding: 2px 0;
+            border-bottom: 1px solid #808080;
+            font-size: 11px;
+        }
+
+        .menu-strip a {
+            padding: 2px 10px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .menu-strip a:hover {
+            background: #000080;
+            color: #fff;
+        }
+
+        .icon-bar {
+            background: linear-gradient(180deg, #d8d8d8 0%, #c0c0c0 50%, #b0b0b0 100%);
+            padding: 4px 6px;
+            display: flex;
+            gap: 3px;
+            border-bottom: 1px solid #808080;
+        }
+
+        .icon-btn {
+            background: linear-gradient(180deg, #e8e8e8 0%, #c0c0c0 100%);
+            border: 2px solid;
+            border-color: #fff #606060 #606060 #fff;
+            padding: 4px 10px;
+            font-size: 10px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .icon-btn:active {
+            border-color: #606060 #fff #fff #606060;
+            background: linear-gradient(180deg, #b0b0b0 0%, #c0c0c0 100%);
+        }
+
+        .url-bar {
+            background: #c0c0c0;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid;
+            border-color: #808080 #fff #fff #808080;
+        }
+
+        .url-bar label {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .url-bar input {
+            flex: 1;
+            background: #fff;
+            border: 2px solid;
+            border-color: #808080 #fff #fff #808080;
+            padding: 3px 6px;
+            font-size: 11px;
+            font-family: 'Lucida Console', monospace;
+        }
+
+        .page-area {
+            background: #fff;
+            margin: 6px;
+            border: 2px solid;
+            border-color: #606060 #dfdfdf #dfdfdf #606060;
+            overflow: hidden;
+        }
+
+        /* ====== SITE DESIGN ====== */
+        .mega-header {
+            background: linear-gradient(180deg,
+                #ffd700 0%,
+                #ffa500 20%,
+                #ff6600 40%,
+                #ff4400 60%,
+                #cc0000 80%,
+                #990000 100%
+            );
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px ridge #ffcc00;
+        }
+
+        .mega-header h1 {
+            font-family: 'Arial Black', Impact, sans-serif;
+            font-size: 58px;
+            color: #000;
+            text-shadow:
+                -2px -2px 0 #fff,
+                2px -2px 0 #fff,
+                -2px 2px 0 #fff,
+                2px 2px 0 #fff,
+                4px 4px 0 #660000;
+            letter-spacing: 3px;
+        }
+
+        .mega-header .sub {
+            font-size: 18px;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .rainbow-bar {
+            height: 8px;
+            background: linear-gradient(90deg,
+                #ff0000, #ff7700, #ffff00, #00ff00, #0077ff, #7700ff, #ff0000
+            );
+        }
+
+        .alert-strip {
+            background: #ffff00;
+            padding: 8px 15px;
+            text-align: center;
+            border-top: 3px solid #ff0000;
+            border-bottom: 3px solid #ff0000;
+        }
+
+        .alert-strip span {
+            font-size: 13px;
+            font-weight: bold;
+            color: #cc0000;
+        }
+
+        .blinker {
+            animation: blink-it 0.8s steps(1) infinite;
+        }
+
+        @keyframes blink-it {
+            0%, 50% { visibility: visible; }
+            51%, 100% { visibility: hidden; }
+        }
+
+        .news-ticker {
+            background: #003366;
+            color: #ffff00;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow: hidden;
+            border-bottom: 2px groove #6699cc;
+        }
+
+        .ticker-scroll {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-left 22s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 65% 35%;
+        }
+
+        .articles-area {
+            padding: 15px;
+            background: #f5f5f5;
+            border-right: 4px groove #c0c0c0;
+        }
+
+        .block-title {
+            background: linear-gradient(180deg, #660000 0%, #330000 100%);
+            color: #ffd700;
+            padding: 10px 15px;
+            font-size: 15px;
+            font-weight: bold;
+            border: 3px outset #990000;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .article-card {
+            background: #fff;
+            border: 3px groove #c0c0c0;
+            margin-bottom: 15px;
+        }
+
+        .article-card.highlight {
+            border: 4px double #cc0000;
+            background: linear-gradient(180deg, #fff5f5 0%, #ffe0e0 100%);
+        }
+
+        .card-header {
+            background: linear-gradient(180deg, #e0e0e0 0%, #c0c0c0 100%);
+            padding: 10px 12px;
+            border-bottom: 2px groove #fff;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .tag {
+            font-size: 10px;
+            font-weight: bold;
+            color: #fff;
+            padding: 3px 8px;
+            border: 2px outset;
+        }
+
+        .tag-break { background: #cc0000; border-color: #ff6666; }
+        .tag-excl { background: #0066cc; border-color: #66aaff; }
+        .tag-opin { background: #663399; border-color: #9966cc; }
+        .tag-anly { background: #336633; border-color: #66aa66; }
+        .tag-warn { background: #cc6600; border-color: #ffaa66; }
+
+        .card-header h2 {
+            flex: 1;
+            font-size: 15px;
+        }
+
+        .card-header h2 a {
+            color: #003366;
+            text-decoration: underline;
+        }
+
+        .card-header h2 a:hover {
+            color: #cc0000;
+        }
+
+        .hot-badge {
+            background: #ff0000;
+            color: #fff;
+            font-size: 9px;
+            padding: 2px 5px;
+            animation: pulse 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .card-body {
+            padding: 12px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .hr-bar {
+            height: 6px;
+            background: linear-gradient(180deg, #808080 0%, #fff 50%, #808080 100%);
+            margin: 15px 0;
+            border: 1px solid #606060;
+        }
+
+        .sidebar-area {
+            padding: 12px;
+            background: #e0e0e0;
+        }
+
+        .side-widget {
+            background: linear-gradient(180deg, #ffffcc 0%, #ffff99 100%);
+            border: 3px ridge #cc9900;
+            margin-bottom: 12px;
+        }
+
+        .widget-head {
+            background: linear-gradient(90deg, #996633 0%, #cc9933 50%, #996633 100%);
+            color: #fff;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .widget-body {
+            padding: 10px;
+            font-size: 11px;
+        }
+
+        .widget-body ul {
+            margin-left: 15px;
+        }
+
+        .widget-body li {
+            margin-bottom: 6px;
+        }
+
+        .widget-body a {
+            color: #003399;
+        }
+
+        .counter-widget {
+            background: #000;
+            padding: 12px;
+            text-align: center;
+            border: 4px ridge #666;
+        }
+
+        .counter-widget p {
+            color: #999;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .counter-nums {
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            color: #ff0000;
+            background: #200000;
+            display: inline-block;
+            padding: 5px 15px;
+            border: 2px inset #600;
+            letter-spacing: 4px;
+        }
+
+        .guest-btn {
+            display: block;
+            background: linear-gradient(180deg, #00cc00 0%, #009900 50%, #006600 100%);
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            border: 3px outset #00cc00;
+            text-shadow: 1px 1px 0 #003300;
+            margin-top: 12px;
+        }
+
+        .guest-btn:hover {
+            background: linear-gradient(180deg, #00ff00 0%, #00cc00 50%, #009900 100%);
+        }
+
+        .page-bottom {
+            background: linear-gradient(180deg, #c0c0c0 0%, #909090 100%);
+            padding: 15px;
+            text-align: center;
+            font-size: 10px;
+            border-top: 3px groove #e0e0e0;
+        }
+
+        .page-bottom a {
+            color: #003366;
+            margin: 0 5px;
+        }
+
+        .page-bottom hr {
+            border: none;
+            height: 3px;
+            background: linear-gradient(90deg, #c0c0c0, #606060, #c0c0c0);
+            margin: 10px 0;
+        }
+
+        .status-strip {
+            background: #c0c0c0;
+            padding: 2px 6px;
+            font-size: 10px;
+            display: flex;
+            border-top: 2px solid;
+            border-color: #fff #808080 #808080 #fff;
+        }
+
+        .status-strip div {
+            border: 1px solid;
+            border-color: #808080 #fff #fff #808080;
+            padding: 1px 8px;
+            background: #c0c0c0;
+        }
+
+        .status-strip div:first-child {
+            flex: 1;
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .ticker-scroll, .blinker, .hot-badge { animation: none; }
+            .blinker { visibility: visible; }
+        }
+
+        :focus {
+            outline: 2px solid #000080;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-frame">
+        <header class="chrome-bar">
+            <span>SLOP BUCKET - CyberNav 5.0</span>
+            <div class="chrome-btns">
+                <button type="button" aria-label="Minimize">_</button>
+                <button type="button" aria-label="Maximize">+</button>
+                <button type="button" aria-label="Close">X</button>
+            </div>
+        </header>
+
+        <nav class="menu-strip" aria-label="Browser menu">
+            <a href="#">File</a>
+            <a href="#">Edit</a>
+            <a href="#">View</a>
+            <a href="#">Navigate</a>
+            <a href="#">Bookmarks</a>
+            <a href="#">Tools</a>
+            <a href="#">Help</a>
+        </nav>
+
+        <div class="icon-bar" role="toolbar" aria-label="Navigation">
+            <button class="icon-btn" type="button">Back</button>
+            <button class="icon-btn" type="button">Forward</button>
+            <button class="icon-btn" type="button">Stop</button>
+            <button class="icon-btn" type="button">Reload</button>
+            <button class="icon-btn" type="button">Home</button>
+            <button class="icon-btn" type="button">Search</button>
+            <button class="icon-btn" type="button">Favorites</button>
+            <button class="icon-btn" type="button">Print</button>
+        </div>
+
+        <div class="url-bar">
+            <label for="loc">Location:</label>
+            <input type="text" id="loc" value="http://www.slopbucket.net/home.htm" readonly>
+        </div>
+
+        <main class="page-area">
+            <header class="mega-header">
+                <h1>SLOP BUCKET</h1>
+                <p class="sub">*** PREMIUM THOUGHT LEADERSHIP PORTAL ***</p>
+            </header>
+
+            <div class="rainbow-bar"></div>
+
+            <div class="alert-strip">
+                <span class="blinker">!!! HOT NEWS !!!</span>
+                <span> Your Morning Routine May Be Destroying Shareholder Value - </span>
+                <a href="#">READ MORE</a>
+            </div>
+
+            <div class="news-ticker" role="marquee" aria-live="off">
+                <span class="ticker-scroll">
+                    +++ BREAKING: Why Gandalf Would Be a Terrible Project Manager +++ EXCLUSIVE: Sourdough as a Service - The $4B Opportunity VCs Are Missing +++ OPINION: Your Coffee Order Is a Personality Disorder +++ ANALYSIS: I Let My Uber Driver Run My Company +++ WARNING: Morning Routines Hurt Shareholders +++
+                </span>
+            </div>
+
+            <div class="content-grid">
+                <section class="articles-area">
+                    <div class="block-title">*** FEATURED STORIES ***</div>
+
+                    <article class="article-card highlight">
+                        <header class="card-header">
+                            <span class="tag tag-break">BREAKING</span>
+                            <h2><a href="#">Why Gandalf Would Be a Terrible Project Manager</a></h2>
+                            <span class="hot-badge">HOT!</span>
+                        </header>
+                        <div class="card-body">
+                            "A wizard is never late." Tell that to the board during the quarterly review, Gandalf. Our management consultants dissect why Middle Earth's greatest wizard would flunk every Agile certification exam.
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <header class="card-header">
+                            <span class="tag tag-excl">EXCLUSIVE</span>
+                            <h2><a href="#">Sourdough as a Service - The $4B Opportunity VCs Are Missing</a></h2>
+                        </header>
+                        <div class="card-body">
+                            Forget SaaS. The future is SaaS: Sourdough as a Service. Our investigative team uncovers why subscription-based fermentation is the unicorn hiding in every artisan bakery.
+                        </div>
+                    </article>
+
+                    <div class="hr-bar"></div>
+
+                    <article class="article-card">
+                        <header class="card-header">
+                            <span class="tag tag-opin">OPINION</span>
+                            <h2><a href="#">Your Coffee Order Is a Personality Disorder</a></h2>
+                        </header>
+                        <div class="card-body">
+                            Oat milk latte? Extra shot? Customize your trauma, one sip at a time. Our resident psychologist explains how your Starbucks order is actually a cry for help.
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <header class="card-header">
+                            <span class="tag tag-anly">ANALYSIS</span>
+                            <h2><a href="#">I Let My Uber Driver Run My Company For a Week</a></h2>
+                        </header>
+                        <div class="card-body">
+                            5-star driver. Strong crypto opinions. Zero management experience. Here's what happened when I gave him the keys to my startup. Spoiler: it involves blockchain.
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <header class="card-header">
+                            <span class="tag tag-warn">WARNING</span>
+                            <h2><a href="#">Your Morning Routine May Be Destroying Shareholder Value</a></h2>
+                            <span class="hot-badge">HOT!</span>
+                        </header>
+                        <div class="card-body">
+                            That 10-minute meditation? The pour-over ritual? New data suggests your self-care is directly correlated with declining investor confidence. Markets are watching you sleep in.
+                        </div>
+                    </article>
+                </section>
+
+                <aside class="sidebar-area" aria-label="Sidebar">
+                    <div class="side-widget">
+                        <div class="widget-head">QUICK LINKS</div>
+                        <div class="widget-body">
+                            <ul>
+                                <li><a href="#">Home Page</a></li>
+                                <li><a href="#">Breaking News</a></li>
+                                <li><a href="#">Opinion</a></li>
+                                <li><a href="#">Analysis</a></li>
+                                <li><a href="#">Archives</a></li>
+                                <li><a href="#">Submit a Tip</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="side-widget">
+                        <div class="widget-head">TRENDING NOW</div>
+                        <div class="widget-body">
+                            <ul>
+                                <li><a href="#">#GandalfFail</a></li>
+                                <li><a href="#">#SourdoughIPO</a></li>
+                                <li><a href="#">#CoffeeTrauma</a></li>
+                                <li><a href="#">#UberCEO</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="counter-widget">
+                        <p>Site Visitors:</p>
+                        <span class="counter-nums">847293</span>
+                    </div>
+
+                    <a href="#" class="guest-btn">SIGN GUESTBOOK!</a>
+                </aside>
+            </div>
+
+            <footer class="page-bottom">
+                <p>Copyright 1997-2026 SLOP BUCKET MEDIA. All Rights Reserved.</p>
+                <hr>
+                <p>
+                    <a href="#">Home</a> |
+                    <a href="#">About</a> |
+                    <a href="#">Contact</a> |
+                    <a href="#">Privacy</a> |
+                    <a href="#">Terms</a> |
+                    <a href="#">Advertise</a>
+                </p>
+                <p style="margin-top:8px;">Optimized for 800x600 - Best viewed with CyberNav 5.0+</p>
+            </footer>
+        </main>
+
+        <div class="status-strip">
+            <div>Document: Done</div>
+            <div>847 readers online</div>
+        </div>
+    </div>
+</body>
+</html>
