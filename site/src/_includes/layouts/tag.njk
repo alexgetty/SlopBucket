@@ -4,9 +4,12 @@ layout: base.njk
 
 <div class="main-layout">
     <section class="news-column">
-        <div class="section-title">TODAY'S TOP STORIES</div>
+        <div class="section-title">TAG: {{ tagDisplay | upper }}</div>
 
-        {% for article in collections.articles %}
+        <p class="back-link"><a href="/tags/">← Back to all tags</a></p>
+
+        {% set taggedArticles = collections.articles | filterByTag(tag) %}
+        {% for article in taggedArticles %}
         <article class="news-item{% if loop.first %} featured{% endif %}">
             <header class="news-header">
                 {% if article.data.label %}
@@ -16,15 +19,9 @@ layout: base.njk
                 {% if article.data.hot %}
                 <span class="hot-badge">HOT!</span>
                 {% endif %}
-                {% if article.data.starburst %}
-                <span class="starburst">{{ article.data.starburst }}</span>
-                {% endif %}
             </header>
             <div class="news-body">
                 {{ article.content | excerpt | safe }}
-                {% if article.data.pageRef %}
-                <p class="page-ref">{{ article.data.pageRef }}</p>
-                {% endif %}
             </div>
         </article>
         {% if loop.index == 2 %}
@@ -37,7 +34,7 @@ layout: base.njk
                 <h2>No Articles Yet</h2>
             </header>
             <div class="news-body">
-                Sources familiar with the matter confirm that content is coming soon. Check back later.
+                No articles with this tag yet.
             </div>
         </article>
         {% endfor %}

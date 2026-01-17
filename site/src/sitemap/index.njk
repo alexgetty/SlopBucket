@@ -1,0 +1,40 @@
+---
+layout: base.njk
+title: Sitemap
+---
+
+<div class="static-page">
+    <h1>Sitemap</h1>
+
+    <h2>Sections</h2>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/news/">News</a></li>
+        <li><a href="/business/">Business</a></li>
+        <li><a href="/opinion/">Opinion</a></li>
+        <li><a href="/life-culture/">Life & Culture</a></li>
+        <li><a href="/tech/">Tech</a></li>
+    </ul>
+
+    <h2>Browse</h2>
+    <ul>
+        <li><a href="/archive/">Archive</a></li>
+        <li><a href="/tags/">Tags</a></li>
+    </ul>
+
+    <h2>Articles</h2>
+    <ul>
+        {% for article in collections.articles %}
+        <li><a href="{{ article.url }}">{{ article.data.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Info</h2>
+    <ul>
+        <li><a href="/about/">About Us</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms of Service</a></li>
+        <li><a href="/advertise/">Advertise</a></li>
+        <li><a href="/guestbook/">Guestbook</a></li>
+    </ul>
+</div>

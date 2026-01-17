@@ -38,3 +38,20 @@ No one's actually listening anymore. Record stores close. The warmth is gone. Al
 And those of us left holding thousands of records? We're just curators of a dead format, wondering if maybe ignorance was the point all along.
 
 I'm not saying don't read Terms of Service. I'm just saying I saw this coming, and it's a lot to carry.
+
+---
+
+## Sloptopsy
+*A bullshit breakdown*
+
+**Format: Listicle**
+The numbered list promises structure and logical progression. Each item feels like a step in an argument, even when the steps don't actually connect. The format itself does persuasive work - if it's organized into seven points, it must be reasoned, right? Lists borrow the authority of outlines without requiring the rigor.
+
+**Archetype: Slippery Slope Warning**
+Start with something reasonable (reading fine print) and chain it to catastrophe through a series of "naturally, this leads to..." leaps. Each step sounds almost plausible in isolation. Stack enough almost-plausible steps and you can connect anything to anything. This is how op-eds turn mask mandates into totalitarianism in six paragraphs.
+
+**Fallacy: False Cause (Causal Chain)**
+The article presents a sequence of events as an inevitable cascade, when each "therefore" is actually a leap. Reading ToS doesn't cause vinyl demand; vinyl scarcity doesn't cause cultural death. But temporal sequence feels like causation when you're nodding along to a list.
+
+**Constraint: Humble-Brag Perspective**
+The narrator can't stop mentioning their museum-grade collection, their insurance burden, their three-times-a-week record store habit. The self-deprecation ("I've become part of the problem") is actually a flex. This voice is everywhere in personal essays - the author who suffers beautifully from having too much taste.

@@ -24,3 +24,20 @@ Everyone who's succeeded with cold plunges says the same thing: it changed their
 **Conclusion:** Would I recommend cold plunges? Absolutely. The people who say it ruined their lives simply weren't consistent enough.
 
 You never hear from them.
+
+---
+
+## Sloptopsy
+*A bullshit breakdown*
+
+**Format: First-Person Experiment**
+"I tried X for Y days" is a content genre that promises vicarious experience and universal lessons drawn from a sample size of one. The day-by-day structure implies rigor - it's documented! - while the first-person framing makes it unfalsifiable. Who can argue with what someone personally experienced?
+
+**Archetype: I Did Weird Thing, Here's What Happened**
+The self-experimentation format borrowed from wellness influencers and productivity bloggers. The arc is always the same: skepticism, suffering, breakthrough, transformation. Except here the transformation is into someone who sleeps in a chest freezer and has lost the ability to recognize family members. The structure stays intact; the content goes off a cliff.
+
+**Fallacy: Survivorship Bias**
+"You never hear from the people who quit." The article says it twice because it's the core joke. Wellness culture is built on testimonials from people who succeeded, while failures stay silent. Every "this changed my life" story exists in a graveyard of "this wasted my time" stories you'll never encounter. The narrator recommends cold plunges *after describing his life falling apart* because he's still talking, so it must have worked.
+
+**Constraint: Wellness Influencer Voice**
+The language of optimization and transcendence applied to increasingly unhinged behavior. "The ice teaches lessons words cannot." "I had transcended family. I was only temperature now." This is the voice of someone who has podcasts where podcasts should not be - treating self-destruction as self-improvement because the vocabulary is the same.

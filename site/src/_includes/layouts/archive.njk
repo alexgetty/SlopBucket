@@ -1,0 +1,34 @@
+---
+layout: base.njk
+---
+
+<div class="main-layout">
+    <section class="news-column">
+        <div class="section-title">ARCHIVE</div>
+
+        {% set groupedArticles = collections.articles | groupByYear %}
+        {% for yearGroup in groupedArticles %}
+        {% set year = yearGroup[0] %}
+        {% set articles = yearGroup[1] %}
+
+        <div class="archive-year">
+            <h2 class="year-heading">{{ year }}</h2>
+            <ul class="archive-list">
+                {% for article in articles %}
+                <li class="archive-item">
+                    <span class="archive-date">{{ article.date | readableDate }}</span>
+                    {% if article.data.label %}
+                    <span class="news-label {{ article.data.label | lower }}">{{ article.data.label }}</span>
+                    {% endif %}
+                    <a href="{{ article.url }}">{{ article.data.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <p>No articles in the archive yet.</p>
+        {% endfor %}
+    </section>
+
+    {% include "partials/sidebar.njk" %}
+</div>

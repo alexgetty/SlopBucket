@@ -1,10 +1,32 @@
-<header class="site-header">
-    <h1><a href="/" style="color: inherit; text-decoration: none;">SLOP BUCKET</a></h1>
-    <p>Your Premier Destination for Thought Leadership</p>
-</header>
+{% set shuffled = tickerHeadlines | shuffle %}
+{% set tickerText = shuffled | join(' +++ ') %}
+{% set tagline = taglines | shuffle | first %}
+{% set hotArticle = collections.articles | shuffle | first %}
 
-<div class="hot-news-strip">
-    <span class="blink-text">!!! HOT NEWS !!!</span>
-    <span>Study Finds Thing You Already Believe - </span>
-    <a href="#">READ MORE</a>
+<div class="header-zone">
+    <header class="site-header">
+        <h1><a href="/" style="color: inherit; text-decoration: none;">SLOP BUCKET</a></h1>
+        <p>{{ tagline }}</p>
+    </header>
+
+    <nav class="section-nav" aria-label="Main sections">
+        <a href="/news/">News</a>
+        <a href="/business/">Business</a>
+        <a href="/opinion/">Opinion</a>
+        <a href="/life-culture/">Life & Culture</a>
+        <a href="/tech/">Tech</a>
+    </nav>
+
+    <div class="hot-news-strip">
+        <span class="blink-text">!!! HOT NEWS !!!</span>
+        <a href="{{ hotArticle.url }}">{{ hotArticle.data.title }}</a>
+    </div>
+
+    <div class="news-ticker" role="marquee" aria-live="off" aria-label="Breaking news ticker - hover header to slow down">
+        <span class="ticker-label">BREAKING</span>
+        <div class="ticker-track">
+            <span class="ticker-content">+++ {{ tickerText }} +++</span>
+            <span class="ticker-content">+++ {{ tickerText }} +++</span>
+        </div>
+    </div>
 </div>

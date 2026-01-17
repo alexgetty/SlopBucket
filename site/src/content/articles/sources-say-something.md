@@ -1,26 +1,46 @@
 ---
-title: Sources Familiar With The Matter Say Something Is Happening
+title: "Multiple Sources Confirm Thermostat Adjusted In 'Clear Escalation'; Facilities Declines Comment"
 date: 2026-01-12
-label: sources
+label: breaking
+section: news
 starburst: WOW!
 pageRef: CONTINUED ON PAGE 7
 author: Anonymous
+tags:
+  - format:breaking-news
+  - archetype:anonymous-sources
+  - fallacy:appeal-to-authority
 ---
 
-Multiple anonymous sources who requested anonymity because they weren't authorized to speak confirm that events are currently occurring.
+Multiple anonymous sources have confirmed that the thermostat in Building C was adjusted sometime between 2 and 4 PM yesterday.
 
-The situation remains developing as it develops. According to people close to the matter who spoke on condition of anonymity, things are underway. What things? The sources declined to specify, citing ongoing thingness.
+The sources, who requested anonymity because they were not authorized to discuss climate control policy, say the temperature was changed by "at least two degrees, possibly three." One source described the adjustment as "aggressive." Another called it "a clear escalation."
 
-"Something is definitely happening," said one source, speaking on background because they were not authorized to speak on foreground. "I can confirm that it is occurring."
+"People are cold," said one source close to the situation, speaking on background. "People are very cold, and someone did this."
 
-Another source, who requested anonymity because their identity is anonymous, corroborated the first source's account. "I have also heard that something is happening," they said. "My source told me."
+A spokesperson for Facilities Management declined to confirm whether the thermostat had been accessed. "We don't comment on ongoing temperature matters," the spokesperson said. When pressed on whether the building even had a thermostat, the spokesperson ended the call.
 
-When reached for comment, a spokesperson for The Situation declined to confirm or deny whether circumstances were circumstancing. "We don't comment on ongoing happenings," the spokesperson said, happening ongoingly.
+The identity of the adjuster remains unknown. Sources say suspicion has fallen on several individuals in the northeast cubicle cluster, though no formal accusations have been made. "We all know who it is," said one source. "We just can't prove it."
 
-Industry observers have observed the industry and noted observations. "This is consistent with our observations," said one observer, observing.
+Observers note this is the third temperature incident this quarter. Previous adjustments in March and September resulted in passive-aggressive email chains and at least one strongly worded note posted near the break room.
 
-The timing of the something remains unclear, though sources indicate it could be soon, eventually, or at some point. Alternatively, it may have already happened, in which case it would be happening in the past tense.
+Critics of the adjustment have criticized it, citing personal discomfort. Supporters, who sources say "run hot," have declined to comment publicly but were observed wearing short sleeves.
 
-Critics of the something have criticized it, while supporters have offered support. Neutral parties remain neutral, though some are reportedly considering becoming less neutral pending further developments.
+This story is developing. The thermostat has reportedly been adjusted again.
 
-This story will be updated as we learn what this is about.
+<details class="sloptopsy">
+<summary>Sloptopsy Report</summary>
+
+**Format: Breaking News**
+
+The breathless urgency of crisis journalism—anonymous sources, official spokespeople, developing situations—applied to an office thermostat dispute. The vocabulary of serious reporting creates false stakes around something genuinely petty, exposing how the format itself manufactures importance.
+
+**Archetype: Anonymous Sources**
+
+Everyone requires anonymity to discuss... temperature preferences. The protection framework designed for whistleblowers and sensitive leaks is deployed for people who are slightly chilly. The gap between the machinery and the stakes is the joke.
+
+**Fallacy: Appeal to Authority**
+
+Sources, Facilities Management spokespeople, observers—the article is dense with authority figures treating a thermostat adjustment like a geopolitical incident. We're trained to trust these roles, so the framing feels credible even when the content is absurd.
+
+</details>

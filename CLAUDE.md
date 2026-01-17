@@ -46,26 +46,11 @@ Located in `/Original Slop/generator/`
 3. User selects one
 4. Claude writes the article
 
-## Content Specs
+## Content Generation
 
-### Length: 400-800 words
-Research-backed for satire specifically:
-- Satire exhausts premises quickly
-- Jokes have diminishing returns
-- The Onion and McSweeney's both prefer under 1,000 words
-- Don't outlive the bit
+See `/Original Slop/generator/WRITING-GUIDE.md` for all content specs, voice guidelines, and Sloptopsy formatting.
 
-### Structure
-- **Headline does heavy lifting** — often the main joke
-- **First paragraph hooks immediately** — no throat-clearing
-- **Format IS the joke** — AP-style for fake news, listicle for absurd lists, memo format for corporate satire
-- **End on a button** — strong last line that lands
-
-### Voice
-- Played completely straight
-- AP-style news voice or LinkedIn earnestness
-- Confidence without self-awareness
-- The gravitas IS the joke
+**The `/headlines` skill loads this automatically before writing.**
 
 ## Design Direction
 

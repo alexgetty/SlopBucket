@@ -28,3 +28,20 @@ The researchers suggest this phenomenon may extend further. Early data indicates
 "Once you accept that someone, somewhere, knows everything about you at all times, the anxiety lifts," the study concludes. "You're not hiding anything. You can't be caught. You're free."
 
 The study was funded by a grant from Palantir.
+
+---
+
+## Sloptopsy
+*A bullshit breakdown*
+
+**Format: Study Finds**
+Science journalism has a template: cite a study, quote researchers, sprinkle in statistics. The format confers authority regardless of whether the study exists, whether the methodology is sound, or whether the conclusion follows from the data. "Study finds" is doing the work of "trust me" while sounding like "don't trust me, trust science."
+
+**Archetype: Correlation-Causation Leap**
+Two unrelated phenomena (using 2FA, apologizing reflexively) are presented as causally linked because... they both increased? The article never explains *why* authentication would cause apologizing. It just asserts correlation with confidence and lets the reader's pattern-matching brain fill in a mechanism that doesn't exist.
+
+**Fallacy: False Cause**
+"Our grandparents had passwords. We added a second step, and that's when the apologizing started." Post hoc reasoning presented as insight. Things that happen in sequence aren't necessarily related, but the human brain desperately wants them to be. Bad science journalism exploits this constantly.
+
+**Constraint: Fake Citations**
+"Researchers at an unspecified European institution." "A behavioral economist not affiliated with the study." These phrases sound rigorous - they're disclosing limitations! - while actually admitting there's no accountability. The Palantir kicker at the end reveals the funding source that explains everything, delivered deadpan as if it's just another detail.

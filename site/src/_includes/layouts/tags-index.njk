@@ -1,0 +1,34 @@
+---
+layout: base.njk
+---
+
+<div class="main-layout">
+    <section class="news-column">
+        <div class="section-title">BROWSE BY TAG</div>
+
+        <div class="tags-intro">
+            <p>Every article is tagged with the manipulation techniques it employs. Browse by category to see the patterns.</p>
+        </div>
+
+        {% set groupedTags = collections.tagList | groupTagsByCategory %}
+        {% for category in groupedTags %}
+        <div class="tag-category">
+            <h2 class="category-heading">{{ category.name }}</h2>
+            <p class="category-description">{{ category.description }}</p>
+            <ul class="tag-list">
+                {% for tag in category.tags %}
+                {% set articleCount = collections.articles | filterByTag(tag.full) | length %}
+                <li class="tag-item">
+                    <a href="/tags/{{ tag.full | tagSlug }}/">{{ tag.name | replace("-", " ") }}</a>
+                    <span class="tag-count">({{ articleCount }})</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <p>No tags yet. Articles will be tagged as they're published.</p>
+        {% endfor %}
+    </section>
+
+    {% include "partials/sidebar.njk" %}
+</div>

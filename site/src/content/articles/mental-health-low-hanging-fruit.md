@@ -1,4 +1,14 @@
-# BREAKING: Government Confirms Mental Health Is Low-Hanging Fruit It Will Not Be Picking
+---
+title: "BREAKING: Government Confirms Mental Health Is Low-Hanging Fruit It Will Not Be Picking"
+date: 2026-01-15
+label: breaking
+section: news
+author: Diana Prescott
+tags:
+  - format:breaking-news
+  - archetype:breathless-coverage
+  - fallacy:appeal-to-authority
+---
 
 *Washington, D.C. — The federal government announced Wednesday that it would be eliminating grants for addiction treatment and mental health services, a decision officials described as "difficult" and "not something we're going to think about after today."*
 
@@ -32,19 +42,23 @@ The grants are set to expire at the end of the fiscal year. Officials confirmed 
 
 *This is a developing story, in the sense that it will continue to get worse.*
 
----
-
-## Sloptopsy
-*A bullshit breakdown*
+<details class="sloptopsy">
+<summary>Sloptopsy Report</summary>
 
 **Format: Breaking News**
+
 The structural skeleton here is crisis journalism: the BREAKING tag, unnamed officials, quotes delivered with gravity, the "developing story" kicker. These are the visual and structural cues that tell your brain *this matters right now* - even when the actual content is a policy memo that was decided weeks ago. The format creates false immediacy.
 
 **Archetype: Breathless Coverage of Non-Event**
+
 The satirical inversion is scale mismatch. Real breaking news covers earthquakes, coups, active shooters. This article applies that same narrative machinery to bureaucratic budget decisions - treating spreadsheet outcomes with the energy of a hostage situation. The joke isn't that mental health funding doesn't matter; it's that the news format makes everything feel equally urgent, which means nothing feels urgent.
 
 **Fallacy: Appeal to Authority**
+
 The article is lousy with unnamed officials, anonymous sources, and people "familiar with the matter" - all delivering quotes with the weight of expertise but zero accountability. "Sources say" is doing a lot of work when you never identify the sources. Real journalism does this constantly; we're just making the emptiness visible.
 
 **Constraint: Low-Hanging Fruit**
+
 The required phrase appears only in official quotes, never in narration. The joke is that the administration uses the metaphor correctly (identifying easy opportunities) but refuses the metaphor's implied action (picking them). Corporate language often works this way - the vocabulary of productivity deployed to avoid productive action.
+
+</details>

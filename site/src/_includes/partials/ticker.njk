@@ -1,4 +1,10 @@
-<div class="news-ticker" role="marquee" aria-live="off">
+{% set shuffled = tickerHeadlines | shuffle %}
+{% set tickerText = shuffled | join(' +++ ') %}
+
+<div class="news-ticker" role="marquee" aria-live="off" aria-label="Breaking news ticker - hover to slow down">
     <span class="ticker-label">BREAKING</span>
-    <span class="ticker-content">+++ Local Man Has Opinion +++ Gandalf Would Be a TERRIBLE Project Manager +++ Sources Familiar With The Matter Say Something Is Happening +++ Sourdough as a Service: VCs are SLEEPING on This! +++ Your Coffee Order is a Personality Disorder +++ MORE INSIDE! +++</span>
+    <div class="ticker-track">
+        <span class="ticker-content">+++ {{ tickerText }} +++</span>
+        <span class="ticker-content">+++ {{ tickerText }} +++</span>
+    </div>
 </div>
