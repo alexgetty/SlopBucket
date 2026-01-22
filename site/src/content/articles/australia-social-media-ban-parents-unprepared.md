@@ -1,6 +1,6 @@
 ---
 title: "Australia's Social Media Ban Enters Second Month; Parents Report Children Now 'Just Sitting There, Looking At Them'"
-author: "[[Margaret Hollis]]"
+author: "Margaret Hollis"
 date: 2026-01-16
 section: news
 tags: [australia, social-media, parenting, technology, legislation]
@@ -42,19 +42,23 @@ When asked what those resources were, the spokesperson said the department was "
 
 This is a developing story.
 
----
-
-## Sloptopsy
-*A bullshit breakdown*
+<details class="sloptopsy">
+<summary>Sloptopsy Report</summary>
 
 **Format: Breaking News / Developing Story**
+
 The "DEVELOPING" and "This is a developing story" framing creates false urgency around a completely static situation. Nothing is actually developing — children existing in physical space is not news. But the format implies crisis, demands attention, and treats the mundane as breaking.
 
 **Archetype: Anecdote as Trend**
+
 A handful of parent quotes become a national crisis. "Multiple parents reported" and "dozens of parents interviewed" sound like data but are just cherry-picked anecdotes stitched into a trend piece. One Brisbane dad's basketball problem is presented as evidence of systemic collapse.
 
 **Fallacy: Hasty Generalization**
+
 The article extrapolates from a few interviews to conclusions about Australian parenting writ large. "Parents across the nation" are experiencing this based on... what sample size? The confidence of the claims wildly exceeds the evidence presented.
 
 **Constraint: Fake Citation — Unnamed Experts**
+
 "A spokesperson," "according to family therapist Dr. Rebecca Okonkwo," "government officials" — the citations sound authoritative but are conveniently vague or fictional. Maximum credibility, zero accountability. If the expert can't be Googled, the expert might not exist.
+
+</details>

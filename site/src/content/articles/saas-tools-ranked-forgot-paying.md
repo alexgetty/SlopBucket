@@ -1,6 +1,6 @@
 ---
 title: Every SaaS Tool In My Stack, Ranked By How Long I Forgot I Was Paying For It
-author: "[[Marcus Chen]]"
+author: "Marcus Chen"
 date: 2026-01-15
 section: opinion
 tags:

@@ -74,26 +74,34 @@ Write the full 400-800 word satirical article using:
 - The selected format's article structure
 - Completely straight-faced AP-style voice
 
-End with an educational footer:
+End with a collapsible Sloptopsy section:
 
-```markdown
----
-
-## How We Made This Up
+```html
+<details class="sloptopsy">
+<summary>Sloptopsy Report</summary>
 
 **Format: [Name]**
+
 [Description of the format and how it manipulates presentation]
 
 **Archetype: [Name]**
+
 [Description of the satirical pattern being employed]
 
 **Fallacy: [Name]**
+
 [Explanation of the logical fallacy and how to spot it in real media]
 
-**Constraints Applied:**
-- [Constraint 1]: [Brief explanation]
-- [Constraint 2]: [Brief explanation if applicable]
+**Constraint: [Name]**
+
+[Brief explanation of the constraint applied]
+
+</details>
 ```
+
+**Save the article to:** `/Users/alex/Repos/SlopBucket/site/src/content/articles/[slug].md`
+- Use kebab-case slug derived from headline (e.g., `dark-stars-emptiness.md`)
+- NO date prefix in filename (the `date` frontmatter field handles sorting)
 
 ### Step 7: Write Audit Log
 Create a log file at `/Users/alex/Repos/SlopBucket/Original Slop/generator/logs/YYYY-MM-DD-HHMMSS.md` with:

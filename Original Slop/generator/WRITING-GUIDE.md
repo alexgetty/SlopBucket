@@ -57,19 +57,22 @@ Structure headlines as a ski jump: serious setup building to punchline LAST. The
 
 **If your writing signals "this is humor," the illusion breaks.**
 
+### Output Location
+**Save articles to:** `/Users/alex/Repos/SlopBucket/site/src/content/articles/[slug].md`
+- Filename: kebab-case slug from headline (e.g., `dark-stars-emptiness.md`)
+- NO date prefix in filename (use `date` frontmatter for sorting)
+
 ### Front Matter
 ```yaml
 ---
 title: "[Headline]"
-author: "[[Author Name]]"
+author: "Author Name"
 date: YYYY-MM-DD
 section: [news|business|opinion|life-culture|tech]
 tags: [relevant, tags]
 ---
 ```
-- Author must be wikilinked
 - Invent a fitting byline name for the article's voice/subject
-- Wiki-link all character names using [[Name]] syntax
 
 ### Section Assignment
 Assign section based on the combination of archetype, subject, and resulting tone—not just topic. The same subject can land in different sections depending on angle.
@@ -93,31 +96,37 @@ Assign section based on the combination of archetype, subject, and resulting ton
 
 ## Sloptopsy
 
-Every article ends with this educational breakdown section:
+Every article ends with this educational breakdown in a collapsible `<details>` element:
 
-```markdown
----
-
-## Sloptopsy
-*A bullshit breakdown*
+```html
+<details class="sloptopsy">
+<summary>Sloptopsy Report</summary>
 
 **Format: [Name]**
+
 [1-3 sentences explaining how this format structure creates false authority or manipulates presentation]
 
 **Archetype: [Name]**
+
 [1-3 sentences explaining the rhetorical trick being employed]
 
 **Fallacy: [Name]**
+
 [1-3 sentences explaining the logical fallacy and how to spot it in real media]
 
 **Constraint: [Name]**
+
 [1-3 sentences explaining how this constraint shaped the piece]
+
+</details>
 ```
+
+**Important:** Use the HTML `<details>` element, NOT markdown horizontal rules. This keeps the educational content collapsible so it doesn't distract from the satire.
 
 ### Sloptopsy Guidelines
 - Write descriptions contextually—don't copy from dimension files
 - Avoid redundancy between sections (if Format and Archetype overlap conceptually, distinguish them clearly)
-- Reference specific lines from the article to ground explanations
+- Never quote or reference specific lines from the article—readers just finished it, they don't need reminders. Describe the concepts and patterns abstractly.
 - Each dimension serves a distinct purpose:
   - **Format** = structural/presentational elements (how it looks on the page)
   - **Archetype** = rhetorical pattern (what persuasion trick is being used)

@@ -1,6 +1,6 @@
 ---
 title: "Experts Warn 'Setting Boundaries' May Disrupt 73% Of Your Relationships"
-author: "[[Rachel Stern]]"
+author: "Rachel Stern"
 date: 2026-01-15
 section: news
 tags:
@@ -13,7 +13,7 @@ Mental health professionals are raising concerns about a troubling trend: people
 
 A new report from the Institute for Relational Dynamics suggests that boundary-setting, once considered a cornerstone of psychological wellness, may disrupt up to 73% of existing relationships when actually practiced.
 
-"In theory, boundaries are healthy," said [[Dr. Karen Whitfield]], a clinical psychologist who requested her workplace not be named. "In practice, they make Thanksgiving very quiet."
+"In theory, boundaries are healthy," said Dr. Karen Whitfield, a clinical psychologist who requested her workplace not be named. "In practice, they make Thanksgiving very quiet."
 
 The concern centers on what researchers call "therapy speak leakage"—the migration of clinical vocabulary from professional settings into casual conversation. Terms like "boundaries," "holding space," "toxic," and "I need you to validate my experience" were designed for controlled environments with trained mediators present.
 
@@ -21,7 +21,7 @@ The concern centers on what researchers call "therapy speak leakage"—the migra
 
 The report found that 68% of respondents who began setting boundaries experienced immediate pushback from people they described as "not respecting my boundaries." An additional 41% reported that family members characterized their boundaries as "this new thing you learned from TikTok."
 
-Experts note that the issue is particularly acute among adults who recently started therapy. "There's a window—usually months two through eight—where patients become, clinically speaking, insufferable," said [[Dr. David Okonkwo]], a family therapist. "It's like a child who just learned a new word. They will find a way to use it in every conversation until you wish you'd never taught them to speak."
+Experts note that the issue is particularly acute among adults who recently started therapy. "There's a window—usually months two through eight—where patients become, clinically speaking, insufferable," said Dr. David Okonkwo, a family therapist. "It's like a child who just learned a new word. They will find a way to use it in every conversation until you wish you'd never taught them to speak."
 
 The report recommends that individuals who wish to set boundaries consider the relational investment already made. "You've spent 35 years tolerating your mother-in-law," Dr. Whitfield said. "Is 'protecting your energy' worth disrupting that?"
 
