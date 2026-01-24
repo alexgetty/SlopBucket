@@ -1,4 +1,10 @@
+require('dotenv').config();
+
 module.exports = function(eleventyConfig) {
+  // Expose environment variables to templates
+  eleventyConfig.addGlobalData("env", {
+    POSTHOG_KEY: process.env.POSTHOG_KEY || ""
+  });
   // Pass through static assets
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });

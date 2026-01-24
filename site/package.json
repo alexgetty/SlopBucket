@@ -8,6 +8,7 @@
     "clean": "rm -rf public"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "dotenv": "^16.4.5"
   }
 }

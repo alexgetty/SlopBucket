@@ -15,5 +15,60 @@ layout: base.njk
         {% if author %} | By {{ author }}{% endif %}
     </div>
 
-    {{ content | safe }}
+    <div class="article-body">
+        {{ content | safe }}
+    </div>
 </div>
+
+{% if env.POSTHOG_KEY %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Sloptopsy toggle tracking
+  const sloptopsy = document.querySelector('details.sloptopsy');
+  if (sloptopsy) {
+    sloptopsy.addEventListener('toggle', function() {
+      if (this.open && typeof posthog !== 'undefined') {
+        posthog.capture('sloptopsy_opened', {
+          article_title: '{{ title | replace("'", "\\'") }}',
+          article_section: '{{ section }}'
+        });
+      }
+    });
+  }
+
+  // Scroll depth tracking
+  const article = document.querySelector('.article-body');
+  if (!article) return;
+
+  const milestones = [25, 50, 75, 100];
+  const tracked = new Set();
+
+  function getScrollPercent() {
+    const rect = article.getBoundingClientRect();
+    const viewHeight = window.innerHeight;
+    const articleTop = rect.top + window.scrollY;
+    const articleHeight = rect.height;
+    const scrolled = window.scrollY - articleTop + viewHeight;
+    return Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+  }
+
+  function checkMilestones() {
+    if (typeof posthog === 'undefined') return;
+    const percent = getScrollPercent();
+    milestones.forEach(function(m) {
+      if (percent >= m && !tracked.has(m)) {
+        tracked.add(m);
+        posthog.capture('article_scroll_depth', {
+          depth: m,
+          article_title: '{{ title | replace("'", "\\'") }}',
+          article_section: '{{ section }}'
+        });
+      }
+    });
+  }
+
+  window.addEventListener('scroll', checkMilestones, { passive: true });
+  checkMilestones();
+});
+</script>
+{% endif %}

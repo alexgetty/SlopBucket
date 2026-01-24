@@ -26,6 +26,8 @@ jobs:
 
       - name: Install and build
         working-directory: ./site
+        env:
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
         run: |
           npm ci
           npm run build
