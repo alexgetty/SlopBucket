@@ -34,6 +34,13 @@ For subjects: Use 1-2 of your extracted trending keywords as placeholder subject
 
 Read the selected files to get their titles and descriptions for the prompt context.
 
+**Article Reference (50% chance per prompt):**
+- Roll `$RANDOM % 2` - if 0, include a reference
+- List articles: `ls /Users/alex/Repos/SlopBucket/site/src/content/articles/`
+- Pick one randomly, read its frontmatter for title and section
+- Generate slug from title (lowercase, remove punctuation, spaces to hyphens)
+- Include title, slug, and section in prompt context
+
 ### Step 3: Generate 5 Headlines
 For each prompt combination, generate one punchy satire headline:
 - Under 15 words
@@ -73,6 +80,8 @@ Write the full 400-800 word satirical article using:
 - The now-complete subject files for rich context
 - The selected format's article structure
 - Completely straight-faced AP-style voice
+
+**Internal Link:** If an article reference was selected for this prompt, include one natural link to it in the body text. Format: `[anchor text](/slug/)`.
 
 End with a collapsible Sloptopsy section:
 

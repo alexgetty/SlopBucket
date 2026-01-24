@@ -29,6 +29,7 @@ Generate satirical headline options from the Slop Bucket prompt generator.
    - **Archetype**: The rhetorical trick (contrarian take, experts warn, etc.)
    - **Subject(s)**: 1-2 topics to write about, with keywords
    - **Constraint(s)**: 1-2 creative restrictions (required phrases, perspectives, fake citations, etc.)
+   - If an ARTICLE REFERENCE section is present, note it for Phase 4
 
 3. Store ALL prompt details in working memory for later retrieval.
 
@@ -64,6 +65,11 @@ Read "/Users/alex/Repos/SlopBucket/Original Slop/generator/WRITING-GUIDE.md"
 This contains all content specs, voice guidelines, and Sloptopsy formatting requirements. Follow it exactly.
 
 Then retrieve the full prompt for the selected headline and write the article according to the guide.
+
+**Internal Link (when ARTICLE REFERENCE present):**
+- Include one natural link to the referenced article in the body
+- Format: `[contextual anchor text](/slug/)`
+- Subtle or central depending on how well it relates to your content
 
 ### Phase 5: Revision
 

@@ -99,6 +99,31 @@ Played completely straight. The gravitas IS the joke.
 - "Experts Warn About Thing (Experts Not Named)"
 - "EXPOSED: The Truth They Don't Want You To Know (They = Unclear)"
 
+## Automated Content Pipeline
+
+A macOS LaunchAgent triggers the content generation workflow daily.
+
+| Component | Location |
+|-----------|----------|
+| LaunchAgent | `~/Library/LaunchAgents/com.slopbucket.content.plist` |
+| Script | `~/bin/slopbucket-content.sh` |
+| Schedule | Daily at 10:30 AM |
+| Logs | `/tmp/slopbucket-content.log`, `/tmp/slopbucket-content.err` |
+
+**What it does:** Opens Terminal and runs `claude /seo-headlines` in this repo.
+
+**Manual trigger:** `launchctl start com.slopbucket.content`
+
+**Management:**
+```bash
+# Check if loaded
+launchctl list | grep slopbucket
+
+# Reload after plist changes
+launchctl unload ~/Library/LaunchAgents/com.slopbucket.content.plist
+launchctl load ~/Library/LaunchAgents/com.slopbucket.content.plist
+```
+
 ## Tech Stack
 TBD - keeping it simple. Likely static HTML/CSS to start. No premature infrastructure.
 

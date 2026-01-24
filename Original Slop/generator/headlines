@@ -153,6 +153,22 @@ for i in $(seq 1 $COUNT); do
     FALL3_DESC=$(get_description "$FALL3_FILE")
   fi
 
+  # 50% chance to include article reference
+  HAS_ARTICLE_REF=0
+  if [ $((RANDOM % 2)) -eq 0 ]; then
+    ARTICLES_DIR="/Users/alex/Repos/SlopBucket/site/src/content/articles"
+    ARTICLES=("$ARTICLES_DIR"/*.md)
+
+    if [ ${#ARTICLES[@]} -gt 0 ]; then
+      ARTICLE_FILE=$(random_element "${ARTICLES[@]}")
+      ARTICLE_TITLE=$(grep -m1 "^title:" "$ARTICLE_FILE" | sed 's/title: *//' | tr -d '"')
+      ARTICLE_SECTION=$(grep -m1 "^section:" "$ARTICLE_FILE" | sed 's/section: *//')
+      # Slugify title to match Eleventy's permalink: /{{ title | slugify }}/
+      ARTICLE_SLUG=$(echo "$ARTICLE_TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 -]//g' | sed 's/  */ /g' | sed 's/ /-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+      HAS_ARTICLE_REF=1
+    fi
+  fi
+
   # Output the prompt
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   echo "PROMPT $i"
@@ -198,6 +214,14 @@ for i in $(seq 1 $COUNT); do
     echo "  • $FALL3_TITLE — $FALL3_DESC"
   fi
   echo ""
+
+  if [ "$HAS_ARTICLE_REF" -eq 1 ]; then
+    echo "ARTICLE REFERENCE:"
+    echo "  Title: $ARTICLE_TITLE"
+    echo "  URL: /$ARTICLE_SLUG/"
+    echo "  Section: $ARTICLE_SECTION"
+    echo ""
+  fi
 
   echo ""
 done

@@ -133,6 +133,18 @@ Every article ends with this educational breakdown in a collapsible `<details>` 
   - **Fallacy** = logical error (how reasoning goes wrong)
   - **Constraint** = creative restriction (what shaped the voice/content)
 
+## Internal Links
+
+When an article reference is provided in the prompt:
+
+- Include one natural link to the referenced article in the body
+- Format: `[contextual anchor text](/slug/)`
+- Style depends on relevance:
+  - **Subtle**: Passing mention ("This echoes [earlier findings on meetings](/stopped-attending-meetings-30-days-nobody-noticed-until-layoffs/).")
+  - **Central**: Building on thesis ("As our [investigation revealed](/stopped-attending-meetings-30-days-nobody-noticed-until-layoffs/), visibility has replaced productivity.")
+- Don't force it—if it doesn't fit naturally, a subtle mention suffices
+- One link per article is enough for SEO
+
 ## Core Principles
 
 ### The One-Switch Rule
