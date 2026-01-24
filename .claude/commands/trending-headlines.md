@@ -99,9 +99,7 @@ End with a collapsible Sloptopsy section:
 </details>
 ```
 
-**Save the article to:** `/Users/alex/Repos/SlopBucket/site/src/content/articles/[slug].md`
-- Use kebab-case slug derived from headline (e.g., `dark-stars-emptiness.md`)
-- NO date prefix in filename (the `date` frontmatter field handles sorting)
+**DO NOT save the article to file.** Print the full article (with frontmatter) in the conversation for user review and feedback. The user will request saving after revision.
 
 ### Step 7: Write Audit Log
 Create a log file at `/Users/alex/Repos/SlopBucket/Original Slop/generator/logs/YYYY-MM-DD-HHMMSS.md` with:
@@ -114,7 +112,9 @@ Create a log file at `/Users/alex/Repos/SlopBucket/Original Slop/generator/logs/
 - Article title
 
 ## Output
-After completing the pipeline, summarize what was created:
+After completing the pipeline:
 - New subject files added to generator
-- Article ready for review
+- Full article printed for review (NOT saved to file)
 - Log file location
+
+User will provide feedback on the article. Only save to `/Users/alex/Repos/SlopBucket/site/src/content/articles/[slug].md` when explicitly requested.
